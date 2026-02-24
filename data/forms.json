@@ -1,0 +1,2038 @@
+[
+    {
+        "id": "ust_arama",
+        "title": "Üst Arama Tutanağı",
+        "category": "search",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Örn: Ankara",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Örn: Çankaya",
+                "group": "location"
+            },
+            {
+                "id": "mahalle_koy",
+                "label": "Mahalle/Köy",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "Mahalle veya köy adı",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "Düzenleyen Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Ad Soyad",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Sicil numarası",
+                "group": "officer"
+            },
+            {
+                "id": "aranan_adsoyad",
+                "label": "Aranan Kişi Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Ad Soyad",
+                "group": "subject"
+            },
+            {
+                "id": "aranan_tc",
+                "label": "T.C. Kimlik No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "11 haneli T.C. kimlik no",
+                "group": "subject"
+            },
+            {
+                "id": "aranan_baba_adi",
+                "label": "Baba Adı",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "aranan_dogum_tarihi",
+                "label": "Doğum Tarihi",
+                "type": "date",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "arama_gerekce",
+                "label": "Arama Gerekçesi",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Aramanın yapılma gerekçesini yazın",
+                "group": "details"
+            },
+            {
+                "id": "arama_karari",
+                "label": "Arama Kararı/Emri",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "Karar numarası",
+                "group": "details"
+            },
+            {
+                "id": "bulunan_esya",
+                "label": "Bulunan Eşya/Madde",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "Arama sonucu ele geçen eşya ve maddeler",
+                "group": "details"
+            },
+            {
+                "id": "tanik1",
+                "label": "Tanık 1 Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Ad Soyad",
+                "group": "witnesses"
+            },
+            {
+                "id": "tanik2",
+                "label": "Tanık 2 Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Ad Soyad",
+                "group": "witnesses"
+            },
+            {
+                "id": "notlar",
+                "label": "Ek Notlar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "Varsa ek açıklamalar",
+                "group": "details"
+            }
+        ],
+        "order": 1
+    },
+    {
+        "id": "arac_arama",
+        "title": "Araç Arama Tutanağı",
+        "category": "search",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Örn: Ankara",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Örn: Çankaya",
+                "group": "location"
+            },
+            {
+                "id": "mahalle_koy",
+                "label": "Mahalle/Köy",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "Düzenleyen Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Ad Soyad",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "plaka",
+                "label": "Araç Plakası",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Örn: 06 ABC 123",
+                "group": "vehicle"
+            },
+            {
+                "id": "marka_model",
+                "label": "Marka/Model",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Örn: Toyota Corolla",
+                "group": "vehicle"
+            },
+            {
+                "id": "renk",
+                "label": "Renk",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "vehicle"
+            },
+            {
+                "id": "arac_sahibi",
+                "label": "Araç Sahibi",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Ad Soyad",
+                "group": "vehicle"
+            },
+            {
+                "id": "surucu",
+                "label": "Sürücü Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Ad Soyad",
+                "group": "vehicle"
+            },
+            {
+                "id": "arama_gerekce",
+                "label": "Arama Gerekçesi",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Aramanın yapılma gerekçesi",
+                "group": "details"
+            },
+            {
+                "id": "bulunan_esya",
+                "label": "Bulunan Eşya/Madde",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "Arama sonucu ele geçen eşya ve maddeler",
+                "group": "details"
+            },
+            {
+                "id": "tanik1",
+                "label": "Tanık 1 Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "witnesses"
+            },
+            {
+                "id": "tanik2",
+                "label": "Tanık 2 Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "witnesses"
+            }
+        ],
+        "order": 2
+    },
+    {
+        "id": "olay_yeri_inceleme",
+        "title": "Olay Yeri İnceleme Tutanağı",
+        "category": "investigation",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "olay_yeri_adresi",
+                "label": "Olay Yeri Adresi",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Detaylı adres",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "Düzenleyen Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "olay_turu",
+                "label": "Olay Türü",
+                "type": "dropdown",
+                "options": [
+                    "Hırsızlık",
+                    "Darp",
+                    "Uyuşturucu",
+                    "Trafik Kazası",
+                    "Yangın",
+                    "Ölümlü Olay",
+                    "Diğer"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "olay_ozeti",
+                "label": "Olay Özeti",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Olayın kısa özeti",
+                "group": "details"
+            },
+            {
+                "id": "olay_yeri_tanimi",
+                "label": "Olay Yeri Tanımı",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Olay yerinin fiziksel tanımı",
+                "group": "details"
+            },
+            {
+                "id": "elde_edilen_deliller",
+                "label": "Elde Edilen Deliller",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "Bulunan deliller ve konumları",
+                "group": "details"
+            },
+            {
+                "id": "alinan_numuneler",
+                "label": "Alınan Numuneler",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "Parmak izi, DNA, vb.",
+                "group": "details"
+            },
+            {
+                "id": "fotograf_video",
+                "label": "Fotoğraf/Video Çekildi mi?",
+                "type": "dropdown",
+                "options": [
+                    "Evet",
+                    "Hayır"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "notlar",
+                "label": "Ek Notlar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            }
+        ],
+        "order": 3
+    },
+    {
+        "id": "yakalama",
+        "title": "Yakalama Tutanağı",
+        "category": "apprehension",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "yakalama_yeri",
+                "label": "Yakalama Yeri",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "Detaylı adres/yer",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "Düzenleyen Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "yakalanan_adsoyad",
+                "label": "Yakalanan Kişi Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "yakalanan_tc",
+                "label": "T.C. Kimlik No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "yakalanan_baba_adi",
+                "label": "Baba Adı",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "yakalanan_dogum_tarihi",
+                "label": "Doğum Tarihi",
+                "type": "date",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "yakalanan_adres",
+                "label": "İkamet Adresi",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "yakalama_gerekce",
+                "label": "Yakalama Gerekçesi",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Yakalama sebebi ve yasal dayanağı",
+                "group": "details"
+            },
+            {
+                "id": "suc_turu",
+                "label": "Suç Türü",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "İlgili suç",
+                "group": "details"
+            },
+            {
+                "id": "haklar_bildirildi",
+                "label": "Haklar Bildirildi mi?",
+                "type": "dropdown",
+                "options": [
+                    "Evet",
+                    "Hayır"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "bildirilen_haklar",
+                "label": "Bildirilen Haklar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "Susma hakkı, avukat talebi, yakına haber verme",
+                "group": "details"
+            },
+            {
+                "id": "notlar",
+                "label": "Ek Notlar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            }
+        ],
+        "order": 4
+    },
+    {
+        "id": "el_koyma",
+        "title": "El Koyma Tutanağı",
+        "category": "seizure",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "Düzenleyen Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "elkoyma_gerekce",
+                "label": "El Koyma Gerekçesi",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "El koyma sebebi ve yasal dayanağı",
+                "group": "details"
+            },
+            {
+                "id": "elkonan_esyalar",
+                "label": "El Konulan Eşya/Madde Listesi",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Eşya adı, miktarı, özellikleri",
+                "group": "details"
+            },
+            {
+                "id": "sahibi",
+                "label": "Eşya Sahibi Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "sahibi_tc",
+                "label": "Eşya Sahibi T.C. Kimlik No",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "teslim_yeri",
+                "label": "Teslim Edildiği Yer",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "Emanet deposu, adliye, vb.",
+                "group": "details"
+            },
+            {
+                "id": "tanik1",
+                "label": "Tanık 1 Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "witnesses"
+            },
+            {
+                "id": "tanik2",
+                "label": "Tanık 2 Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "witnesses"
+            },
+            {
+                "id": "notlar",
+                "label": "Ek Notlar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            }
+        ],
+        "order": 5
+    },
+    {
+        "id": "teslim_tesellum",
+        "title": "Teslim-Tesellüm Tutanağı",
+        "category": "seizure",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "teslim_eden_adsoyad",
+                "label": "Teslim Eden Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "teslim_eden_rutbe",
+                "label": "Teslim Eden Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "teslim_alan_adsoyad",
+                "label": "Teslim Alan Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "teslim_alan_rutbe",
+                "label": "Teslim Alan Rütbe/Unvan",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "teslim_edilen_esyalar",
+                "label": "Teslim Edilen Eşya/Belge Listesi",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Teslim edilen eşya/belgelerin listesi",
+                "group": "details"
+            },
+            {
+                "id": "teslim_gerekce",
+                "label": "Teslim Gerekçesi",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "notlar",
+                "label": "Ek Notlar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            }
+        ],
+        "order": 6
+    },
+    {
+        "id": "ifade_supheli",
+        "title": "İfade Tutanağı (Şüpheli)",
+        "category": "statement",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "İfadeyi Alan Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "supheli_adsoyad",
+                "label": "Şüpheli Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "supheli_tc",
+                "label": "T.C. Kimlik No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "supheli_baba_adi",
+                "label": "Baba Adı",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "supheli_ana_adi",
+                "label": "Ana Adı",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "supheli_dogum_yeri",
+                "label": "Doğum Yeri",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "supheli_dogum_tarihi",
+                "label": "Doğum Tarihi",
+                "type": "date",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "supheli_adres",
+                "label": "İkamet Adresi",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "suc_konusu",
+                "label": "Suç Konusu",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "İlgili suç",
+                "group": "details"
+            },
+            {
+                "id": "haklar_okundu",
+                "label": "Haklar Okundu mu?",
+                "type": "dropdown",
+                "options": [
+                    "Evet",
+                    "Hayır"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "avukat_talebi",
+                "label": "Avukat Talebi",
+                "type": "dropdown",
+                "options": [
+                    "Talep Etti",
+                    "Talep Etmedi"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "ifade_metni",
+                "label": "İfade Metni",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Şüphelinin beyanını yazın",
+                "group": "statement"
+            },
+            {
+                "id": "soru_cevap",
+                "label": "Soru-Cevap",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "S1: ...\nC1: ...\nS2: ...\nC2: ...",
+                "group": "statement"
+            }
+        ],
+        "order": 7
+    },
+    {
+        "id": "ifade_tanik",
+        "title": "İfade Tutanağı (Tanık/Mağdur)",
+        "category": "statement",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "İfadeyi Alan Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "ifade_turu",
+                "label": "İfade Türü",
+                "type": "dropdown",
+                "options": [
+                    "Tanık",
+                    "Mağdur"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "tanik_adsoyad",
+                "label": "Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "tanik_tc",
+                "label": "T.C. Kimlik No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "tanik_adres",
+                "label": "İkamet Adresi",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "tanik_telefon",
+                "label": "Telefon",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "olay_konusu",
+                "label": "Olay Konusu",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "yemin_edildi",
+                "label": "Yemin Edildi mi?",
+                "type": "dropdown",
+                "options": [
+                    "Evet",
+                    "Hayır"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "ifade_metni",
+                "label": "İfade Metni",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Tanık/mağdur beyanını yazın",
+                "group": "statement"
+            },
+            {
+                "id": "soru_cevap",
+                "label": "Soru-Cevap",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "S1: ...\nC1: ...",
+                "group": "statement"
+            }
+        ],
+        "order": 8
+    },
+    {
+        "id": "teshis",
+        "title": "Teşhis Tutanağı",
+        "category": "investigation",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "Düzenleyen Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "teshis_eden",
+                "label": "Teşhis Eden Kişi Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "teshis_eden_tc",
+                "label": "T.C. Kimlik No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "teshis_edilen",
+                "label": "Teşhis Edilen Kişi Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "teshis_yontemi",
+                "label": "Teşhis Yöntemi",
+                "type": "dropdown",
+                "options": [
+                    "Yüz yüze",
+                    "Fotoğraftan",
+                    "Video kaydından"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "kisi_sayisi",
+                "label": "Teşhis Grubundaki Kişi Sayısı",
+                "type": "number",
+                "options": [],
+                "required": true,
+                "placeholder": "En az 3 kişi",
+                "group": "details"
+            },
+            {
+                "id": "sonuc",
+                "label": "Teşhis Sonucu",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Teşhis yapıldı/yapılamadı ve açıklama",
+                "group": "details"
+            },
+            {
+                "id": "notlar",
+                "label": "Ek Notlar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            }
+        ],
+        "order": 9
+    },
+    {
+        "id": "olum_muayene",
+        "title": "Ölü Muayene ve Otopsi Tutanağı",
+        "category": "investigation",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "olay_yeri",
+                "label": "Olay Yeri/Bulunma Yeri",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "Düzenleyen Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "vefat_eden_adsoyad",
+                "label": "Vefat Eden Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "Biliniyorsa",
+                "group": "subject"
+            },
+            {
+                "id": "vefat_eden_tc",
+                "label": "T.C. Kimlik No",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "vefat_eden_yas",
+                "label": "Tahmini Yaş",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "vefat_eden_cinsiyet",
+                "label": "Cinsiyet",
+                "type": "dropdown",
+                "options": [
+                    "Erkek",
+                    "Kadın",
+                    "Belirlenemedi"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "olum_sebebi_tahmin",
+                "label": "Tahmini Ölüm Sebebi",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "cesedin_durumu",
+                "label": "Ceseddin Durumu",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Ceseddin bulunma durumu ve özellikler",
+                "group": "details"
+            },
+            {
+                "id": "doktor_adi",
+                "label": "Muayene Eden Doktor",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "otopsi_karari",
+                "label": "Otopsi Kararı",
+                "type": "dropdown",
+                "options": [
+                    "Otopsi yapılacak",
+                    "Otopsi yapılmayacak"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "notlar",
+                "label": "Ek Notlar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            }
+        ],
+        "order": 10
+    },
+    {
+        "id": "trafik_kaza",
+        "title": "Trafik Kaza Tespit Tutanağı",
+        "category": "investigation",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "kaza_yeri",
+                "label": "Kaza Yeri",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Yol ismi, km bilgisi, detaylı konum",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "Düzenleyen Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "kaza_turu",
+                "label": "Kaza Türü",
+                "type": "dropdown",
+                "options": [
+                    "Ölümlü",
+                    "Yaralamalı",
+                    "Maddi Hasarlı"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "hava_durumu",
+                "label": "Hava Durumu",
+                "type": "dropdown",
+                "options": [
+                    "Açık",
+                    "Bulutlu",
+                    "Yağmurlu",
+                    "Karlı",
+                    "Sisli"
+                ],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "yol_durumu",
+                "label": "Yol Durumu",
+                "type": "dropdown",
+                "options": [
+                    "Kuru",
+                    "Islak",
+                    "Buzlu",
+                    "Çamurlu"
+                ],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "arac1_plaka",
+                "label": "1. Araç Plakası",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "vehicle1"
+            },
+            {
+                "id": "arac1_marka",
+                "label": "1. Araç Marka/Model",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "vehicle1"
+            },
+            {
+                "id": "arac1_surucu",
+                "label": "1. Araç Sürücüsü",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "vehicle1"
+            },
+            {
+                "id": "arac1_ehliyet",
+                "label": "Ehliyet Bilgisi",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "vehicle1"
+            },
+            {
+                "id": "arac1_sigorta",
+                "label": "Sigorta Bilgisi",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "Sigorta şirketi ve poliçe no",
+                "group": "vehicle1"
+            },
+            {
+                "id": "arac2_plaka",
+                "label": "2. Araç Plakası",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "vehicle2"
+            },
+            {
+                "id": "arac2_marka",
+                "label": "2. Araç Marka/Model",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "vehicle2"
+            },
+            {
+                "id": "arac2_surucu",
+                "label": "2. Araç Sürücüsü",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "vehicle2"
+            },
+            {
+                "id": "kaza_ozeti",
+                "label": "Kaza Özeti",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Kazanın oluş şekli",
+                "group": "details"
+            },
+            {
+                "id": "yaralilar",
+                "label": "Yaralılar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "Yaralı kişilerin bilgileri",
+                "group": "details"
+            },
+            {
+                "id": "alkol_testi",
+                "label": "Alkol Testi Yapıldı mı?",
+                "type": "dropdown",
+                "options": [
+                    "Evet - Pozitif",
+                    "Evet - Negatif",
+                    "Hayır"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "details"
+            },
+            {
+                "id": "notlar",
+                "label": "Ek Notlar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            }
+        ],
+        "order": 11
+    },
+    {
+        "id": "koruma_muhafaza",
+        "title": "Koruma Altına Alma Tutanağı",
+        "category": "apprehension",
+        "fields": [
+            {
+                "id": "il",
+                "label": "İl",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "ilce",
+                "label": "İlçe",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "tarih",
+                "label": "Tarih",
+                "type": "date",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "saat",
+                "label": "Saat",
+                "type": "time",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "location"
+            },
+            {
+                "id": "duzenleyen_adsoyad",
+                "label": "Düzenleyen Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_rutbe",
+                "label": "Rütbe",
+                "type": "dropdown",
+                "options": [
+                    "Er",
+                    "Çavuş",
+                    "Uzman Çavuş",
+                    "Astsubay",
+                    "Üsteğmen",
+                    "Yüzbaşı",
+                    "Binbaşı",
+                    "Yarbay",
+                    "Albay"
+                ],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "duzenleyen_sicil",
+                "label": "Sicil No",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "officer"
+            },
+            {
+                "id": "korunan_adsoyad",
+                "label": "Koruma Altına Alınan Ad Soyad",
+                "type": "text",
+                "options": [],
+                "required": true,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "korunan_tc",
+                "label": "T.C. Kimlik No",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "korunan_yas",
+                "label": "Yaş",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "subject"
+            },
+            {
+                "id": "koruma_gerekce",
+                "label": "Koruma Altına Alma Gerekçesi",
+                "type": "textarea",
+                "options": [],
+                "required": true,
+                "placeholder": "Koruma altına alma sebebi",
+                "group": "details"
+            },
+            {
+                "id": "teslim_edildigi_yer",
+                "label": "Teslim Edildiği Yer/Kişi",
+                "type": "text",
+                "options": [],
+                "required": false,
+                "placeholder": "Aile, kurum, vb.",
+                "group": "details"
+            },
+            {
+                "id": "saglik_durumu",
+                "label": "Sağlık Durumu",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "Kişinin sağlık durumu",
+                "group": "details"
+            },
+            {
+                "id": "notlar",
+                "label": "Ek Notlar",
+                "type": "textarea",
+                "options": [],
+                "required": false,
+                "placeholder": "",
+                "group": "details"
+            }
+        ],
+        "order": 12
+    }
+]

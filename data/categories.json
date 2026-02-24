@@ -1,0 +1,34 @@
+[
+    {
+        "id": "asayis",
+        "title": "Asayiş Olayları",
+        "icon": "shield-alert",
+        "description": "Kamu düzeni ve toplum huzuruna yönelik olaylar",
+        "color": "#1565C0",
+        "order": 1
+    },
+    {
+        "id": "teror",
+        "title": "Terör Olayları",
+        "icon": "alert-triangle",
+        "description": "Terör örgütleriyle ilgili olaylar ve ihbar değerlendirme",
+        "color": "#C62828",
+        "order": 2
+    },
+    {
+        "id": "tem",
+        "title": "TEM Olayları",
+        "icon": "eye",
+        "description": "Terörle mücadele kapsamındaki özel prosedürler",
+        "color": "#4527A0",
+        "order": 3
+    },
+    {
+        "id": "kacakcilik",
+        "title": "Kaçakçılık Olayları",
+        "icon": "package-x",
+        "description": "Her türlü kaçakçılık suçlarına ilişkin işlemler",
+        "color": "#E65100",
+        "order": 4
+    }
+]
