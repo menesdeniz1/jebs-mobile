@@ -10,7 +10,7 @@ import { showSuccess, showInfo } from '../../../components/ui/Toast';
 import { useTheme, FontFamily, FontSize, Spacing, BorderRadius } from '../../../constants/theme';
 import { useFavoritesStore } from '../../../store/favoritesStore';
 import { getEventById, getFormById } from '../../../data/loader';
-import type { Event, FormTemplate, Step } from '../../../data/types';
+import type { FormTemplate, Step, InstructionStep } from '../../../data/types';
 
 const TABS = ['Tanım', 'Yapılacaklar', 'Evraklar', 'Kanun'] as const;
 type TabType = (typeof TABS)[number];
@@ -57,44 +57,6 @@ export default function EventDetailScreen() {
         setCheckedState(new Array(event.steps.length).fill(false));
     };
 
-    // Parse legal references from string format
-    const parseLegalRefs = () => {
-        if (!event.legal_references) return [];
-
-        // If already structured (post-migration), return as-is
-        if (Array.isArray(event.legal_references)) {
-            return event.legal_references.map((ref) => ({
-                article: ref.article,
-                title: ref.title,
-                summary: ref.summary,
-            }));
-        }
-
-        // Legacy string format — parse with regex
-        const text = event.legal_references;
-        const lines = text.split('\n').filter((l: string) => l.trim());
-        const refs: Array<{ article: string; title: string; summary: string }> = [];
-        let current: { article: string; title: string; summary: string } | null = null;
-
-        for (const line of lines) {
-            const clean = line.replace(/\*\*/g, '').trim();
-            if (clean.match(/^(TCK|CMK|PVSK|\d{4})/)) {
-                if (current) refs.push(current);
-                const parts = clean.split('—').map((s: string) => s.trim());
-                const articleParts = parts[0].split(':').map((s: string) => s.trim());
-                current = {
-                    article: articleParts[0],
-                    title: parts[1] || articleParts[1] || '',
-                    summary: articleParts[1] || parts[1] || '',
-                };
-            } else if (current && clean) {
-                current.summary += '\n' + clean;
-            }
-        }
-        if (current) refs.push(current);
-        return refs;
-    };
-
     const relatedForms = event.related_forms
         ? event.related_forms
             .map((fId: string) => getFormById(fId))
@@ -102,15 +64,13 @@ export default function EventDetailScreen() {
         : [];
 
     /** Get instruction steps for the checklist */
-    const getInstructionSteps = (): Array<{ order: number; text: string; is_critical: boolean }> => {
-        return event.steps
-            .filter((s: Step) => s.type === 'instruction')
-            .map((s) => ({
-                order: s.order,
-                text: s.text,
-                is_critical: (s as { is_critical?: boolean }).is_critical ?? false,
-            }));
-    };
+    const instructionSteps = event.steps
+        .filter((s: Step): s is InstructionStep => s.type === 'instruction')
+        .map((s) => ({
+            order: s.order,
+            text: s.text,
+            is_critical: s.is_critical ?? false,
+        }));
 
     const renderContent = () => {
         switch (activeTab) {
@@ -131,33 +91,111 @@ export default function EventDetailScreen() {
                             {event.how_it_occurs}
                         </Text>
 
+                        {/* Prosecutor Info — structured */}
                         {event.prosecutor_info && (
                             <>
                                 <Text style={[styles.sectionTitle, { color: colors.primary, fontFamily: FontFamily.bold }]}>
                                     Savcı Görüşmesi
                                 </Text>
-                                <Text style={[styles.bodyText, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
-                                    {typeof event.prosecutor_info === 'string'
-                                        ? event.prosecutor_info.replace(/\*\*/g, '')
-                                        : `Ne zaman: ${event.prosecutor_info.when}\nNasıl: ${event.prosecutor_info.how}`}
+                                <Text style={[styles.label, { color: colors.textSecondary, fontFamily: FontFamily.semibold }]}>
+                                    Ne zaman aranır:
                                 </Text>
+                                <Text style={[styles.bodyText, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
+                                    {event.prosecutor_info.when}
+                                </Text>
+                                {event.prosecutor_info.how ? (
+                                    <>
+                                        <Text style={[styles.label, { color: colors.textSecondary, fontFamily: FontFamily.semibold }]}>
+                                            Nasıl aranır:
+                                        </Text>
+                                        <Text style={[styles.bodyText, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
+                                            {event.prosecutor_info.how}
+                                        </Text>
+                                    </>
+                                ) : null}
+                                {event.prosecutor_info.what_to_report.length > 0 && (
+                                    <>
+                                        <Text style={[styles.label, { color: colors.textSecondary, fontFamily: FontFamily.semibold }]}>
+                                            Ne söylenir:
+                                        </Text>
+                                        {event.prosecutor_info.what_to_report.map((item, i) => (
+                                            <Text key={i} style={[styles.bulletItem, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
+                                                • {item}
+                                            </Text>
+                                        ))}
+                                    </>
+                                )}
+                                {event.prosecutor_info.expected_orders.length > 0 && (
+                                    <>
+                                        <Text style={[styles.label, { color: colors.textSecondary, fontFamily: FontFamily.semibold }]}>
+                                            Önemli:
+                                        </Text>
+                                        {event.prosecutor_info.expected_orders.map((item, i) => (
+                                            <Text key={i} style={[styles.bodyText, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
+                                                {item}
+                                            </Text>
+                                        ))}
+                                    </>
+                                )}
                             </>
                         )}
 
+                        {/* Party Roles — structured */}
                         {event.party_roles && (
                             <>
                                 <Text style={[styles.sectionTitle, { color: colors.primary, fontFamily: FontFamily.bold }]}>
-                                    Tarafların Rolleri
+                                    Tarafların Hakları
                                 </Text>
-                                <Text style={[styles.bodyText, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
-                                    {typeof event.party_roles === 'string'
-                                        ? event.party_roles.replace(/\*\*/g, '')
-                                        : [
-                                            'Şüpheli: ' + event.party_roles.suspect.join(', '),
-                                            'Mağdur: ' + event.party_roles.victim.join(', '),
-                                            'Tanık: ' + event.party_roles.witness.join(', '),
-                                        ].join('\n\n')}
+                                {event.party_roles.suspect.length > 0 && (
+                                    <>
+                                        <Text style={[styles.label, { color: colors.textSecondary, fontFamily: FontFamily.semibold }]}>
+                                            Şüpheli Hakları:
+                                        </Text>
+                                        {event.party_roles.suspect.map((item, i) => (
+                                            <Text key={i} style={[styles.bulletItem, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
+                                                • {item}
+                                            </Text>
+                                        ))}
+                                    </>
+                                )}
+                                {event.party_roles.victim.length > 0 && (
+                                    <>
+                                        <Text style={[styles.label, { color: colors.textSecondary, fontFamily: FontFamily.semibold }]}>
+                                            Mağdur Hakları:
+                                        </Text>
+                                        {event.party_roles.victim.map((item, i) => (
+                                            <Text key={i} style={[styles.bulletItem, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
+                                                • {item}
+                                            </Text>
+                                        ))}
+                                    </>
+                                )}
+                                {event.party_roles.witness.length > 0 && (
+                                    <>
+                                        <Text style={[styles.label, { color: colors.textSecondary, fontFamily: FontFamily.semibold }]}>
+                                            Tanık Hakları:
+                                        </Text>
+                                        {event.party_roles.witness.map((item, i) => (
+                                            <Text key={i} style={[styles.bulletItem, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
+                                                • {item}
+                                            </Text>
+                                        ))}
+                                    </>
+                                )}
+                            </>
+                        )}
+
+                        {/* Witness Procedure — structured */}
+                        {event.witness_procedure && event.witness_procedure.length > 0 && (
+                            <>
+                                <Text style={[styles.sectionTitle, { color: colors.primary, fontFamily: FontFamily.bold }]}>
+                                    Tanık Dinleme Prosedürü
                                 </Text>
+                                {event.witness_procedure.map((step, i) => (
+                                    <Text key={i} style={[styles.numberedItem, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
+                                        {i + 1}. {step}
+                                    </Text>
+                                ))}
                             </>
                         )}
                     </ScrollView>
@@ -167,7 +205,7 @@ export default function EventDetailScreen() {
                 return (
                     <ScrollView contentContainerStyle={styles.tabContent}>
                         <StepChecklist
-                            steps={getInstructionSteps()}
+                            steps={instructionSteps}
                             checkedState={checkedState}
                             onToggle={handleCheckToggle}
                             onReset={handleCheckReset}
@@ -209,8 +247,8 @@ export default function EventDetailScreen() {
                     </ScrollView>
                 );
 
-            case 'Kanun':
-                const refs = parseLegalRefs();
+            case 'Kanun': {
+                const refs = event.legal_references ?? [];
                 return (
                     <ScrollView contentContainerStyle={styles.tabContent}>
                         {refs.length > 0 ? (
@@ -219,7 +257,7 @@ export default function EventDetailScreen() {
                                     key={i}
                                     article={ref.article}
                                     title={ref.title}
-                                    summary={ref.summary}
+                                    summary={ref.penalty || ref.summary}
                                 />
                             ))
                         ) : (
@@ -229,6 +267,7 @@ export default function EventDetailScreen() {
                         )}
                     </ScrollView>
                 );
+            }
         }
     };
 
@@ -309,8 +348,24 @@ const styles = StyleSheet.create({
         marginTop: Spacing.xl,
         marginBottom: Spacing.sm,
     },
+    label: {
+        fontSize: FontSize.small,
+        marginTop: Spacing.md,
+        marginBottom: Spacing.xs,
+    },
     bodyText: {
         fontSize: FontSize.body,
         lineHeight: 22,
+    },
+    bulletItem: {
+        fontSize: FontSize.body,
+        lineHeight: 24,
+        paddingLeft: Spacing.sm,
+    },
+    numberedItem: {
+        fontSize: FontSize.body,
+        lineHeight: 24,
+        paddingLeft: Spacing.xs,
+        marginBottom: Spacing.xs,
     },
 });

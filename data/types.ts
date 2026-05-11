@@ -83,11 +83,11 @@ export interface Event {
   definition: string;
   how_it_occurs: string;
   steps: Step[];
-  /** Legacy string format kept for backward compat during migration */
-  prosecutor_info?: string | ProsecutorInfo;
-  party_roles?: string | PartyRoles;
-  witness_procedure?: string | string[];
-  legal_references?: string | LegalReference[];
+  /** Structured prosecutor contact info (P1-7 migrated) */
+  prosecutor_info?: ProsecutorInfo;
+  party_roles?: PartyRoles;
+  witness_procedure?: string[];
+  legal_references?: LegalReference[];
   related_forms?: string[];
   order: number;
 }

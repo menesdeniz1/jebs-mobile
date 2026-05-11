@@ -76,9 +76,9 @@ export const LegalReferenceSchema = z.object({
 
 export const ProsecutorInfoSchema = z.object({
   when: z.string(),
-  how: z.string(),
-  what_to_report: z.array(z.string()),
-  expected_orders: z.array(z.string()),
+  how: z.string().default(''),
+  what_to_report: z.array(z.string()).default([]),
+  expected_orders: z.array(z.string()).default([]),
 });
 
 // ── Party Roles ──────────────────────────────────────
@@ -98,11 +98,11 @@ export const EventSchema = z.object({
   definition: z.string(),
   how_it_occurs: z.string(),
   steps: z.array(FlexibleStepSchema),
-  // During migration, these can be strings (legacy) or structured objects (new)
-  prosecutor_info: z.union([z.string(), ProsecutorInfoSchema]).optional(),
-  party_roles: z.union([z.string(), PartyRolesSchema]).optional(),
-  witness_procedure: z.union([z.string(), z.array(z.string())]).optional(),
-  legal_references: z.union([z.string(), z.array(LegalReferenceSchema)]).optional(),
+  // Post-migration: structured objects only (P1-7 complete)
+  prosecutor_info: ProsecutorInfoSchema.optional(),
+  party_roles: PartyRolesSchema.optional(),
+  witness_procedure: z.array(z.string()).optional(),
+  legal_references: z.array(LegalReferenceSchema).optional(),
   related_forms: z.array(z.string()).optional(),
   order: z.number(),
 });

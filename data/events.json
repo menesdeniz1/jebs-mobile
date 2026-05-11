@@ -67,10 +67,82 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Olay yerine intikalden hemen sonra.\n\n**Nasıl aranır:** Nöbetçi Cumhuriyet Savcısı aranır.\n\n**Ne söylenir:**\n- Olayın yeri, tarihi ve saati\n- Tarafların kimlik bilgileri\n- Yaralamanın boyutu ve mağdurun durumu\n- Olay yerinde elde edilen ilk bulgular\n- Şüphelinin yakalanıp yakalanmadığı\n\n**Savcının vereceği talimat beklenir:** Şüphelinin serbest bırakılması, gözaltına alınması veya adli kontrol uygulanması gibi.",
-        "party_roles": "**Şüpheli Hakları:**\n- Susma hakkı\n- Avukat talep etme hakkı\n- Yakınlarına haber verme hakkı\n- İfade vermeme hakkı\n- Delil sunma hakkı\n\n**Mağdur Hakları:**\n- Sağlık hizmeti alma hakkı\n- Şikâyette bulunma hakkı\n- Avukat talep etme hakkı\n- Bilgilendirilme hakkı\n- Koruma talep etme hakkı\n\n**Tanık Hakları:**\n- Tanıklıktan çekinme hakkı (yakın akrabalar için)\n- Güvenlik tedbirleri talep etme hakkı",
-        "witness_procedure": "1. Tanıklar ayrı ayrı dinlenir\n2. Tanığa hakları ve yükümlülükleri bildirilir\n3. Tanığın kimlik bilgileri alınır\n4. Tanığa yemin ettirilir\n5. Açık uçlu sorular sorulur\n6. İfade tutanağı tanığa okutulur ve imzalatılır",
-        "legal_references": "**TCK Madde 86:** Kasten yaralama — 1 yıldan 3 yıla kadar hapis cezası\n\n**TCK Madde 87:** Neticesi sebebiyle ağırlaşmış yaralama — 3 yıldan 6 yıla kadar hapis\n\n**TCK Madde 88:** Kasten yaralamada ihmali davranış\n\n**CMK Madde 90:** Yakalama ve gözaltı şartları\n\n**CMK Madde 116-119:** Arama kararı ve koşulları",
+        "prosecutor_info": {
+            "when": "Olay yerine intikalden hemen sonra.",
+            "how": "Nöbetçi Cumhuriyet Savcısı aranır.",
+            "what_to_report": [
+                "Olayın yeri, tarihi ve saati",
+                "Tarafların kimlik bilgileri",
+                "Yaralamanın boyutu ve mağdurun durumu",
+                "Olay yerinde elde edilen ilk bulgular",
+                "Şüphelinin yakalanıp yakalanmadığı"
+            ],
+            "expected_orders": [
+                "Şüphelinin serbest bırakılması, gözaltına alınması veya adli kontrol uygulanması gibi."
+            ]
+        },
+        "party_roles": {
+            "suspect": [
+                "Susma hakkı",
+                "Avukat talep etme hakkı",
+                "Yakınlarına haber verme hakkı",
+                "İfade vermeme hakkı",
+                "Delil sunma hakkı"
+            ],
+            "victim": [
+                "Sağlık hizmeti alma hakkı",
+                "Şikâyette bulunma hakkı",
+                "Avukat talep etme hakkı",
+                "Bilgilendirilme hakkı",
+                "Koruma talep etme hakkı"
+            ],
+            "witness": [
+                "Tanıklıktan çekinme hakkı (yakın akrabalar için)",
+                "Güvenlik tedbirleri talep etme hakkı"
+            ]
+        },
+        "witness_procedure": [
+            "Tanıklar ayrı ayrı dinlenir",
+            "Tanığa hakları ve yükümlülükleri bildirilir",
+            "Tanığın kimlik bilgileri alınır",
+            "Tanığa yemin ettirilir",
+            "Açık uçlu sorular sorulur",
+            "İfade tutanağı tanığa okutulur ve imzalatılır"
+        ],
+        "legal_references": [
+            {
+                "code": "TCK",
+                "article": "TCK Madde 86",
+                "title": "Kasten yaralama",
+                "summary": "Kasten yaralama",
+                "penalty": "1 yıldan 3 yıla kadar hapis cezası"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 87",
+                "title": "Neticesi sebebiyle ağırlaşmış yaralama",
+                "summary": "Neticesi sebebiyle ağırlaşmış yaralama",
+                "penalty": "3 yıldan 6 yıla kadar hapis"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 88",
+                "title": "Kasten yaralamada ihmali davranış",
+                "summary": "Kasten yaralamada ihmali davranış"
+            },
+            {
+                "code": "CMK",
+                "article": "CMK Madde 90",
+                "title": "Yakalama ve gözaltı şartları",
+                "summary": "Yakalama ve gözaltı şartları"
+            },
+            {
+                "code": "CMK",
+                "article": "CMK Madde 116-119",
+                "title": "Arama kararı ve koşulları",
+                "summary": "Arama kararı ve koşulları"
+            }
+        ],
         "related_forms": [
             "olay_yeri_inceleme",
             "ifade_supheli",
@@ -142,10 +214,72 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Olay yerine intikalden sonra, ilk tespitler yapıldığında.\n\n**Ne söylenir:**\n- Hırsızlık türü ve yöntemi\n- Çalınan malların niteliği ve yaklaşık değeri\n- Şüpheli bilgileri (varsa)\n- Olay yerindeki delil durumu",
-        "party_roles": "**Şüpheli Hakları:**\n- Susma hakkı\n- Avukat talep etme hakkı\n- Etkin pişmanlık hükümlerinden yararlanma hakkı\n\n**Mağdur Hakları:**\n- Çalınan malların iadesini talep etme hakkı\n- Tazminat davası açma hakkı\n- Şikâyet hakkı",
-        "witness_procedure": "1. Olay anını gören tanıklar tespit edilir\n2. Tanık ifadeleri ayrı ayrı alınır\n3. Şüphelinin eşkâli hakkında detaylı bilgi alınır\n4. Teşhis işlemi için tanığın uygunluğu değerlendirilir",
-        "legal_references": "**TCK Madde 141:** Basit hırsızlık — 1 yıldan 3 yıla kadar hapis\n\n**TCK Madde 142:** Nitelikli hırsızlık — 3 yıldan 7 yıla kadar hapis\n\n**TCK Madde 143:** Gece vakti hırsızlık — ceza yarı oranında artırılır\n\n**TCK Madde 145:** Değer azlığı — ceza indirimi\n\n**TCK Madde 168:** Etkin pişmanlık",
+        "prosecutor_info": {
+            "when": "Olay yerine intikalden sonra, ilk tespitler yapıldığında.",
+            "how": "",
+            "what_to_report": [
+                "Hırsızlık türü ve yöntemi",
+                "Çalınan malların niteliği ve yaklaşık değeri",
+                "Şüpheli bilgileri (varsa)",
+                "Olay yerindeki delil durumu"
+            ],
+            "expected_orders": []
+        },
+        "party_roles": {
+            "suspect": [
+                "Susma hakkı",
+                "Avukat talep etme hakkı",
+                "Etkin pişmanlık hükümlerinden yararlanma hakkı"
+            ],
+            "victim": [
+                "Çalınan malların iadesini talep etme hakkı",
+                "Tazminat davası açma hakkı",
+                "Şikâyet hakkı"
+            ],
+            "witness": []
+        },
+        "witness_procedure": [
+            "Olay anını gören tanıklar tespit edilir",
+            "Tanık ifadeleri ayrı ayrı alınır",
+            "Şüphelinin eşkâli hakkında detaylı bilgi alınır",
+            "Teşhis işlemi için tanığın uygunluğu değerlendirilir"
+        ],
+        "legal_references": [
+            {
+                "code": "TCK",
+                "article": "TCK Madde 141",
+                "title": "Basit hırsızlık",
+                "summary": "Basit hırsızlık",
+                "penalty": "1 yıldan 3 yıla kadar hapis"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 142",
+                "title": "Nitelikli hırsızlık",
+                "summary": "Nitelikli hırsızlık",
+                "penalty": "3 yıldan 7 yıla kadar hapis"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 143",
+                "title": "Gece vakti hırsızlık",
+                "summary": "Gece vakti hırsızlık",
+                "penalty": "ceza yarı oranında artırılır"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 145",
+                "title": "Değer azlığı",
+                "summary": "Değer azlığı",
+                "penalty": "ceza indirimi"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 168",
+                "title": "Etkin pişmanlık",
+                "summary": "Etkin pişmanlık"
+            }
+        ],
         "related_forms": [
             "olay_yeri_inceleme",
             "ifade_supheli",
@@ -223,10 +357,60 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Uyuşturucu ele geçirildiği anda derhal.\n\n**Ne söylenir:**\n- Uyuşturucunun türü ve miktarı\n- Ele geçirme koşulları\n- Şüpheli sayısı ve kimlikleri\n- Kullanım/ticaret değerlendirmesi",
-        "party_roles": "**Şüpheli Hakları:**\n- Susma hakkı\n- Avukat talep etme hakkı\n- Tedavi ve denetimli serbestlik talep etme hakkı (kullanıcılar için)\n\n**Dikkat:** Uyuşturucu ticareti suçlarında tutuklama talep edilir.",
-        "witness_procedure": "1. İhbarcının kimliği gizli tutulur\n2. Görgü tanıkları ayrı ayrı dinlenir\n3. Ele geçirme anına tanık olan kolluk görevlilerinin ifadeleri alınır",
-        "legal_references": "**TCK Madde 188:** Uyuşturucu ticareti — 10 yıldan 20 yıla kadar hapis\n\n**TCK Madde 191:** Kullanmak için bulundurma — Tedavi ve denetimli serbestlik\n\n**TCK Madde 192:** Etkin pişmanlık\n\n**2313 sayılı Kanun:** Uyuşturucu maddelerin murakabesi",
+        "prosecutor_info": {
+            "when": "Uyuşturucu ele geçirildiği anda derhal.",
+            "how": "",
+            "what_to_report": [
+                "Uyuşturucunun türü ve miktarı",
+                "Ele geçirme koşulları",
+                "Şüpheli sayısı ve kimlikleri",
+                "Kullanım/ticaret değerlendirmesi"
+            ],
+            "expected_orders": []
+        },
+        "party_roles": {
+            "suspect": [
+                "Susma hakkı",
+                "Avukat talep etme hakkı",
+                "Tedavi ve denetimli serbestlik talep etme hakkı (kullanıcılar için)",
+                "⚠ Uyuşturucu ticareti suçlarında tutuklama talep edilir."
+            ],
+            "victim": [],
+            "witness": []
+        },
+        "witness_procedure": [
+            "İhbarcının kimliği gizli tutulur",
+            "Görgü tanıkları ayrı ayrı dinlenir",
+            "Ele geçirme anına tanık olan kolluk görevlilerinin ifadeleri alınır"
+        ],
+        "legal_references": [
+            {
+                "code": "TCK",
+                "article": "TCK Madde 188",
+                "title": "Uyuşturucu ticareti",
+                "summary": "Uyuşturucu ticareti",
+                "penalty": "10 yıldan 20 yıla kadar hapis"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 191",
+                "title": "Kullanmak için bulundurma",
+                "summary": "Kullanmak için bulundurma",
+                "penalty": "Tedavi ve denetimli serbestlik"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 192",
+                "title": "Etkin pişmanlık",
+                "summary": "Etkin pişmanlık"
+            },
+            {
+                "code": "Kanun",
+                "article": "2313 sayılı Kanun",
+                "title": "Uyuşturucu maddelerin murakabesi",
+                "summary": "Uyuşturucu maddelerin murakabesi"
+            }
+        ],
         "related_forms": [
             "ust_arama",
             "el_koyma",
@@ -288,10 +472,53 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Şikâyet alındığında.\n\n**Ne söylenir:**\n- Dolandırıcılık yöntemi\n- Zarara uğranılan miktar\n- Şüpheli bilgileri\n- Elde edilen deliller",
-        "party_roles": "**Mağdur Hakları:**\n- Zararın tazminini talep etme hakkı\n- Şikâyet hakkı\n- Bilgilendirilme hakkı",
-        "witness_procedure": "1. Mağdur beyanı detaylı alınır\n2. İşleme tanık olan kişilerin ifadeleri alınır\n3. Banka görevlileri gerekirse tanık olarak dinlenir",
-        "legal_references": "**TCK Madde 157:** Basit dolandırıcılık — 1 yıldan 5 yıla kadar hapis\n\n**TCK Madde 158:** Nitelikli dolandırıcılık — 3 yıldan 10 yıla kadar hapis\n\n**TCK Madde 159:** Daha az cezayı gerektiren hal",
+        "prosecutor_info": {
+            "when": "Şikâyet alındığında.",
+            "how": "",
+            "what_to_report": [
+                "Dolandırıcılık yöntemi",
+                "Zarara uğranılan miktar",
+                "Şüpheli bilgileri",
+                "Elde edilen deliller"
+            ],
+            "expected_orders": []
+        },
+        "party_roles": {
+            "suspect": [],
+            "victim": [
+                "Zararın tazminini talep etme hakkı",
+                "Şikâyet hakkı",
+                "Bilgilendirilme hakkı"
+            ],
+            "witness": []
+        },
+        "witness_procedure": [
+            "Mağdur beyanı detaylı alınır",
+            "İşleme tanık olan kişilerin ifadeleri alınır",
+            "Banka görevlileri gerekirse tanık olarak dinlenir"
+        ],
+        "legal_references": [
+            {
+                "code": "TCK",
+                "article": "TCK Madde 157",
+                "title": "Basit dolandırıcılık",
+                "summary": "Basit dolandırıcılık",
+                "penalty": "1 yıldan 5 yıla kadar hapis"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 158",
+                "title": "Nitelikli dolandırıcılık",
+                "summary": "Nitelikli dolandırıcılık",
+                "penalty": "3 yıldan 10 yıla kadar hapis"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 159",
+                "title": "Daha az cezayı gerektiren hal",
+                "summary": "Daha az cezayı gerektiren hal"
+            }
+        ],
         "related_forms": [
             "ifade_supheli",
             "ifade_tanik",
@@ -362,10 +589,71 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Derhal, olay yerine intikal edildiğinde.\n\n**Önemli:** 6284 sayılı Kanun kapsamında kolluk amiri kendiliğinden koruyucu tedbir kararı verebilir. Savcılık onayı sonradan alınır.\n\n**Ne söylenir:**\n- Şiddetin türü ve boyutu\n- Mağdurun durumu\n- Risk değerlendirmesi\n- Alınan tedbirler",
-        "party_roles": "**Mağdur Hakları (6284 sayılı Kanun):**\n- Barınma desteği (sığınma evi)\n- Geçici maddi yardım\n- Psikolojik destek\n- Hukuki danışmanlık\n- Koruma kararı\n\n**Şiddet Uygulayanın Yükümlülükleri:**\n- Uzaklaştırma kararına uyma zorunluluğu\n- İhlal halinde zorlama hapsi",
-        "witness_procedure": "1. Mağdur beyanı öncelikli alınır\n2. Çocuklar varsa uzman eşliğinde dinlenir\n3. Komşu ve yakın akraba beyanları alınır\n4. Daha önce şiddet olup olmadığı araştırılır",
-        "legal_references": "**6284 sayılı Kanun:** Ailenin Korunması ve Kadına Karşı Şiddetin Önlenmesi\n\n**TCK Madde 86:** Kasten yaralama\n\n**TCK Madde 96:** Eziyet\n\n**TCK Madde 106:** Tehdit\n\n**TCK Madde 232:** Kötü muamele",
+        "prosecutor_info": {
+            "when": "Derhal, olay yerine intikal edildiğinde.",
+            "how": "",
+            "what_to_report": [
+                "Şiddetin türü ve boyutu",
+                "Mağdurun durumu",
+                "Risk değerlendirmesi",
+                "Alınan tedbirler"
+            ],
+            "expected_orders": [
+                "6284 sayılı Kanun kapsamında kolluk amiri kendiliğinden koruyucu tedbir kararı verebilir. Savcılık onayı sonradan alınır."
+            ]
+        },
+        "party_roles": {
+            "suspect": [
+                "Uzaklaştırma kararına uyma zorunluluğu",
+                "İhlal halinde zorlama hapsi"
+            ],
+            "victim": [
+                "Barınma desteği (sığınma evi)",
+                "Geçici maddi yardım",
+                "Psikolojik destek",
+                "Hukuki danışmanlık",
+                "Koruma kararı"
+            ],
+            "witness": []
+        },
+        "witness_procedure": [
+            "Mağdur beyanı öncelikli alınır",
+            "Çocuklar varsa uzman eşliğinde dinlenir",
+            "Komşu ve yakın akraba beyanları alınır",
+            "Daha önce şiddet olup olmadığı araştırılır"
+        ],
+        "legal_references": [
+            {
+                "code": "Kanun",
+                "article": "6284 sayılı Kanun",
+                "title": "Ailenin Korunması ve Kadına Karşı Şiddetin Önlenmesi",
+                "summary": "Ailenin Korunması ve Kadına Karşı Şiddetin Önlenmesi"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 86",
+                "title": "Kasten yaralama",
+                "summary": "Kasten yaralama"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 96",
+                "title": "Eziyet",
+                "summary": "Eziyet"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 106",
+                "title": "Tehdit",
+                "summary": "Tehdit"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 232",
+                "title": "Kötü muamele",
+                "summary": "Kötü muamele"
+            }
+        ],
         "related_forms": [
             "yakalama",
             "ifade_supheli",
@@ -432,10 +720,54 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:**\n- Ölümlü veya ağır yaralanmalı kazalarda derhal aranır\n- Yaralamalı kazalarda bilgi verilir\n- Yalnızca maddi hasarlı kazalarda savcılık aranmaz",
-        "party_roles": "**Sürücü Hakları:**\n- Avukat talep etme hakkı\n- Susma hakkı\n- Alkol testi sonucuna itiraz hakkı",
-        "witness_procedure": "1. Kaza anını gören tanıklar tespit edilir\n2. Tanıkların iletişim bilgileri alınır\n3. İfadeleri ayrı ayrı alınır\n4. Kaza krokisi çizilir",
-        "legal_references": "**2918 sayılı Kanun:** Karayolları Trafik Kanunu\n\n**TCK Madde 85:** Taksirle öldürme — 2 yıldan 6 yıla kadar hapis\n\n**TCK Madde 89:** Taksirle yaralama\n\n**TCK Madde 179:** Trafik güvenliğini tehlikeye sokma",
+        "prosecutor_info": {
+            "when": "- Ölümlü veya ağır yaralanmalı kazalarda derhal aranır",
+            "how": "",
+            "what_to_report": [],
+            "expected_orders": []
+        },
+        "party_roles": {
+            "suspect": [],
+            "victim": [
+                "Avukat talep etme hakkı",
+                "Susma hakkı",
+                "Alkol testi sonucuna itiraz hakkı"
+            ],
+            "witness": []
+        },
+        "witness_procedure": [
+            "Kaza anını gören tanıklar tespit edilir",
+            "Tanıkların iletişim bilgileri alınır",
+            "İfadeleri ayrı ayrı alınır",
+            "Kaza krokisi çizilir"
+        ],
+        "legal_references": [
+            {
+                "code": "Kanun",
+                "article": "2918 sayılı Kanun",
+                "title": "Karayolları Trafik Kanunu",
+                "summary": "Karayolları Trafik Kanunu"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 85",
+                "title": "Taksirle öldürme",
+                "summary": "Taksirle öldürme",
+                "penalty": "2 yıldan 6 yıla kadar hapis"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 89",
+                "title": "Taksirle yaralama",
+                "summary": "Taksirle yaralama"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 179",
+                "title": "Trafik güvenliğini tehlikeye sokma",
+                "summary": "Trafik güvenliğini tehlikeye sokma"
+            }
+        ],
         "related_forms": [
             "trafik_kaza",
             "ifade_supheli",
@@ -492,10 +824,56 @@
                 "is_critical": true
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** İhbar alındığı anda derhal.\n\n**Önemli:** Terör suçlarında CMK 251 kapsamında özel soruşturma yetkisi olan savcıyla iletişime geçilir.",
-        "party_roles": "**İhbarcı Hakları:**\n- Kimliğinin gizli tutulması\n- Koruma tedbirlerinden yararlanma\n\n**Şüpheli Hakları:**\n- Avukat talep etme hakkı\n- Susma hakkı",
-        "witness_procedure": "1. İhbarcının kimliği kesinlikle gizli tutulur\n2. İhbar detayları yazılı olarak kaydedilir\n3. Teyit edici ek bilgi istenir",
-        "legal_references": "**3713 sayılı Kanun:** Terörle Mücadele Kanunu\n\n**TCK Madde 314:** Silahlı örgüt üyeliği\n\n**CMK Madde 251:** Terör suçlarında özel soruşturma\n\n**CMK Madde 135:** İletişimin tespiti ve dinlenmesi",
+        "prosecutor_info": {
+            "when": "İhbar alındığı anda derhal.",
+            "how": "",
+            "what_to_report": [],
+            "expected_orders": [
+                "Terör suçlarında CMK 251 kapsamında özel soruşturma yetkisi olan savcıyla iletişime geçilir."
+            ]
+        },
+        "party_roles": {
+            "suspect": [
+                "Avukat talep etme hakkı",
+                "Susma hakkı"
+            ],
+            "victim": [
+                "Kimliğinin gizli tutulması",
+                "Koruma tedbirlerinden yararlanma"
+            ],
+            "witness": []
+        },
+        "witness_procedure": [
+            "İhbarcının kimliği kesinlikle gizli tutulur",
+            "İhbar detayları yazılı olarak kaydedilir",
+            "Teyit edici ek bilgi istenir"
+        ],
+        "legal_references": [
+            {
+                "code": "Kanun",
+                "article": "3713 sayılı Kanun",
+                "title": "Terörle Mücadele Kanunu",
+                "summary": "Terörle Mücadele Kanunu"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 314",
+                "title": "Silahlı örgüt üyeliği",
+                "summary": "Silahlı örgüt üyeliği"
+            },
+            {
+                "code": "CMK",
+                "article": "CMK Madde 251",
+                "title": "Terör suçlarında özel soruşturma",
+                "summary": "Terör suçlarında özel soruşturma"
+            },
+            {
+                "code": "CMK",
+                "article": "CMK Madde 135",
+                "title": "İletişimin tespiti ve dinlenmesi",
+                "summary": "İletişimin tespiti ve dinlenmesi"
+            }
+        ],
         "related_forms": [
             "yakalama",
             "ifade_supheli",
@@ -562,10 +940,48 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Derhal, tüm terör olaylarında.\n\n**Koordinasyon:** Terörle mücadele savcısı, istihbarat birimi ve üst komutanlık eş zamanlı bilgilendirilir.",
-        "party_roles": "**Mağdur Hakları:**\n- Acil sağlık hizmeti\n- Psikolojik destek\n- Tazminat hakkı (5233 sayılı Kanun)",
-        "witness_procedure": "1. Tanıklar güvenli alana alınır\n2. Tanık ifadeleri uzman personel tarafından alınır\n3. Tanıkların psikolojik durumu değerlendirilir",
-        "legal_references": "**3713 sayılı Kanun:** Terörle Mücadele Kanunu\n\n**5233 sayılı Kanun:** Terör ve Terörle Mücadeleden Doğan Zararların Karşılanması\n\n**TCK Madde 302:** Devletin birliğini bozmaya teşebbüs",
+        "prosecutor_info": {
+            "when": "Derhal, tüm terör olaylarında.",
+            "how": "",
+            "what_to_report": [],
+            "expected_orders": [
+                "Terörle mücadele savcısı, istihbarat birimi ve üst komutanlık eş zamanlı bilgilendirilir."
+            ]
+        },
+        "party_roles": {
+            "suspect": [],
+            "victim": [
+                "Acil sağlık hizmeti",
+                "Psikolojik destek",
+                "Tazminat hakkı (5233 sayılı Kanun)"
+            ],
+            "witness": []
+        },
+        "witness_procedure": [
+            "Tanıklar güvenli alana alınır",
+            "Tanık ifadeleri uzman personel tarafından alınır",
+            "Tanıkların psikolojik durumu değerlendirilir"
+        ],
+        "legal_references": [
+            {
+                "code": "Kanun",
+                "article": "3713 sayılı Kanun",
+                "title": "Terörle Mücadele Kanunu",
+                "summary": "Terörle Mücadele Kanunu"
+            },
+            {
+                "code": "Kanun",
+                "article": "5233 sayılı Kanun",
+                "title": "Terör ve Terörle Mücadeleden Doğan Zararların Karşılanması",
+                "summary": "Terör ve Terörle Mücadeleden Doğan Zararların Karşılanması"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 302",
+                "title": "Devletin birliğini bozmaya teşebbüs",
+                "summary": "Devletin birliğini bozmaya teşebbüs"
+            }
+        ],
         "related_forms": [
             "olay_yeri_inceleme",
             "yakalama",
@@ -623,10 +1039,47 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Şüpheli tespit edildiğinde derhal.\n\n**Önemli:** Gecikmesinde sakınca bulunan hallerde savcı emri olmadan arama yapılabilir, ancak derhal savcıya bilgi verilir.",
-        "party_roles": "**Şüpheli Hakları:**\n- Avukat talep etme hakkı\n- Susma hakkı\n- Yakınlarına haber verilme hakkı",
-        "witness_procedure": "1. Arama sırasında hazır bulunan tanıkların ifadeleri alınır\n2. Tanıklar arama tutanağını imzalar",
-        "legal_references": "**CMK Madde 116:** Şüpheli veya sanığın üst araması\n\n**CMK Madde 119:** Arama kararı\n\n**PVSK Madde 4/A:** Durdurma ve kimlik sorma",
+        "prosecutor_info": {
+            "when": "Şüpheli tespit edildiğinde derhal.",
+            "how": "",
+            "what_to_report": [],
+            "expected_orders": [
+                "Gecikmesinde sakınca bulunan hallerde savcı emri olmadan arama yapılabilir, ancak derhal savcıya bilgi verilir."
+            ]
+        },
+        "party_roles": {
+            "suspect": [
+                "Avukat talep etme hakkı",
+                "Susma hakkı",
+                "Yakınlarına haber verilme hakkı"
+            ],
+            "victim": [],
+            "witness": []
+        },
+        "witness_procedure": [
+            "Arama sırasında hazır bulunan tanıkların ifadeleri alınır",
+            "Tanıklar arama tutanağını imzalar"
+        ],
+        "legal_references": [
+            {
+                "code": "CMK",
+                "article": "CMK Madde 116",
+                "title": "Şüpheli veya sanığın üst araması",
+                "summary": "Şüpheli veya sanığın üst araması"
+            },
+            {
+                "code": "CMK",
+                "article": "CMK Madde 119",
+                "title": "Arama kararı",
+                "summary": "Arama kararı"
+            },
+            {
+                "code": "PVSK",
+                "article": "PVSK Madde 4/A",
+                "title": "Durdurma ve kimlik sorma",
+                "summary": "Durdurma ve kimlik sorma"
+            }
+        ],
         "related_forms": [
             "ust_arama",
             "arac_arama",
@@ -689,10 +1142,49 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Arama öncesi talimat alınır.\n\n**Önemli:** Gece vakti arama ancak gecikmesinde sakınca bulunan hallerde yapılabilir.",
-        "party_roles": "**Aranan Kişi Hakları:**\n- Arama kararını görme hakkı\n- Avukat bulundurma hakkı\n- Arama sırasında hazır bulunma hakkı\n- İtiraz hakkı",
-        "witness_procedure": "1. Aramada en az iki tanık bulundurulur\n2. Tanıklar arama tutanağını imzalar\n3. Arama sonucu bulunanlar tanıklar huzurunda kaydedilir",
-        "legal_references": "**CMK Madde 116-122:** Arama hükümleri\n\n**CMK Madde 123-134:** El koyma hükümleri\n\n**Anayasa Madde 21:** Konut dokunulmazlığı",
+        "prosecutor_info": {
+            "when": "Arama öncesi talimat alınır.",
+            "how": "",
+            "what_to_report": [],
+            "expected_orders": [
+                "Gece vakti arama ancak gecikmesinde sakınca bulunan hallerde yapılabilir."
+            ]
+        },
+        "party_roles": {
+            "suspect": [],
+            "victim": [],
+            "witness": [
+                "Arama kararını görme hakkı",
+                "Avukat bulundurma hakkı",
+                "Arama sırasında hazır bulunma hakkı",
+                "İtiraz hakkı"
+            ]
+        },
+        "witness_procedure": [
+            "Aramada en az iki tanık bulundurulur",
+            "Tanıklar arama tutanağını imzalar",
+            "Arama sonucu bulunanlar tanıklar huzurunda kaydedilir"
+        ],
+        "legal_references": [
+            {
+                "code": "CMK",
+                "article": "CMK Madde 116-122",
+                "title": "Arama hükümleri",
+                "summary": "Arama hükümleri"
+            },
+            {
+                "code": "CMK",
+                "article": "CMK Madde 123-134",
+                "title": "El koyma hükümleri",
+                "summary": "El koyma hükümleri"
+            },
+            {
+                "code": "Anayasa",
+                "article": "Anayasa Madde 21",
+                "title": "Konut dokunulmazlığı",
+                "summary": "Konut dokunulmazlığı"
+            }
+        ],
         "related_forms": [
             "ust_arama",
             "arac_arama",
@@ -750,10 +1242,46 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Tespit anında derhal.\n\n**Koordinasyon:** Narkotik savcısı ve narkotik birimi eş zamanlı bilgilendirilir.",
-        "party_roles": "**Şüpheli Hakları:**\n- Avukat talep etme hakkı\n- Susma hakkı",
-        "witness_procedure": "1. Ele geçirme anında tanık bulundurulur\n2. Tartım ve sayım tanıklar huzurunda yapılır",
-        "legal_references": "**TCK Madde 188:** Uyuşturucu ticareti\n\n**5607 sayılı Kanun:** Kaçakçılıkla Mücadele Kanunu\n\n**2313 sayılı Kanun:** Uyuşturucu Maddelerin Murakabesi",
+        "prosecutor_info": {
+            "when": "Tespit anında derhal.",
+            "how": "",
+            "what_to_report": [],
+            "expected_orders": [
+                "Narkotik savcısı ve narkotik birimi eş zamanlı bilgilendirilir."
+            ]
+        },
+        "party_roles": {
+            "suspect": [
+                "Avukat talep etme hakkı",
+                "Susma hakkı"
+            ],
+            "victim": [],
+            "witness": []
+        },
+        "witness_procedure": [
+            "Ele geçirme anında tanık bulundurulur",
+            "Tartım ve sayım tanıklar huzurunda yapılır"
+        ],
+        "legal_references": [
+            {
+                "code": "TCK",
+                "article": "TCK Madde 188",
+                "title": "Uyuşturucu ticareti",
+                "summary": "Uyuşturucu ticareti"
+            },
+            {
+                "code": "Kanun",
+                "article": "5607 sayılı Kanun",
+                "title": "Kaçakçılıkla Mücadele Kanunu",
+                "summary": "Kaçakçılıkla Mücadele Kanunu"
+            },
+            {
+                "code": "Kanun",
+                "article": "2313 sayılı Kanun",
+                "title": "Uyuşturucu Maddelerin Murakabesi",
+                "summary": "Uyuşturucu Maddelerin Murakabesi"
+            }
+        ],
         "related_forms": [
             "el_koyma",
             "yakalama",
@@ -811,10 +1339,46 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Tespit anında derhal.\n\n**Koordinasyon:** Müze müdürlüğü ve kültür varlıkları koruma birimi ile koordineli çalışılır.",
-        "party_roles": "**Şüpheli Hakları:**\n- Avukat talep etme hakkı\n- Susma hakkı",
-        "witness_procedure": "1. Ele geçirme tanıkları dinlenir\n2. Uzman bilirkişi raporu istenir",
-        "legal_references": "**2863 sayılı Kanun:** Kültür ve Tabiat Varlıklarını Koruma Kanunu\n\n**TCK Madde 68:** Zoralım (müsadere)\n\n**5607 sayılı Kanun:** Kaçakçılıkla Mücadele Kanunu",
+        "prosecutor_info": {
+            "when": "Tespit anında derhal.",
+            "how": "",
+            "what_to_report": [],
+            "expected_orders": [
+                "Müze müdürlüğü ve kültür varlıkları koruma birimi ile koordineli çalışılır."
+            ]
+        },
+        "party_roles": {
+            "suspect": [
+                "Avukat talep etme hakkı",
+                "Susma hakkı"
+            ],
+            "victim": [],
+            "witness": []
+        },
+        "witness_procedure": [
+            "Ele geçirme tanıkları dinlenir",
+            "Uzman bilirkişi raporu istenir"
+        ],
+        "legal_references": [
+            {
+                "code": "Kanun",
+                "article": "2863 sayılı Kanun",
+                "title": "Kültür ve Tabiat Varlıklarını Koruma Kanunu",
+                "summary": "Kültür ve Tabiat Varlıklarını Koruma Kanunu"
+            },
+            {
+                "code": "TCK",
+                "article": "TCK Madde 68",
+                "title": "Zoralım (müsadere)",
+                "summary": "Zoralım (müsadere)"
+            },
+            {
+                "code": "Kanun",
+                "article": "5607 sayılı Kanun",
+                "title": "Kaçakçılıkla Mücadele Kanunu",
+                "summary": "Kaçakçılıkla Mücadele Kanunu"
+            }
+        ],
         "related_forms": [
             "el_koyma",
             "yakalama",
@@ -871,10 +1435,44 @@
                 "is_critical": false
             }
         ],
-        "prosecutor_info": "**Ne zaman aranır:** Kaçak ürün ele geçirildiğinde derhal.",
-        "party_roles": "**Şüpheli Hakları:**\n- Avukat talep etme hakkı\n- Susma hakkı",
-        "witness_procedure": "1. Sayım sırasında tanık bulundurulur\n2. Tanıklar tutanağı imzalar",
-        "legal_references": "**5607 sayılı Kanun:** Kaçakçılıkla Mücadele Kanunu\n\n**4733 sayılı Kanun:** Tütün ve Alkol Piyasası Düzenleme Kanunu\n\n**5015 sayılı Kanun:** Petrol Piyasası Kanunu",
+        "prosecutor_info": {
+            "when": "Kaçak ürün ele geçirildiğinde derhal.",
+            "how": "",
+            "what_to_report": [],
+            "expected_orders": []
+        },
+        "party_roles": {
+            "suspect": [
+                "Avukat talep etme hakkı",
+                "Susma hakkı"
+            ],
+            "victim": [],
+            "witness": []
+        },
+        "witness_procedure": [
+            "Sayım sırasında tanık bulundurulur",
+            "Tanıklar tutanağı imzalar"
+        ],
+        "legal_references": [
+            {
+                "code": "Kanun",
+                "article": "5607 sayılı Kanun",
+                "title": "Kaçakçılıkla Mücadele Kanunu",
+                "summary": "Kaçakçılıkla Mücadele Kanunu"
+            },
+            {
+                "code": "Kanun",
+                "article": "4733 sayılı Kanun",
+                "title": "Tütün ve Alkol Piyasası Düzenleme Kanunu",
+                "summary": "Tütün ve Alkol Piyasası Düzenleme Kanunu"
+            },
+            {
+                "code": "Kanun",
+                "article": "5015 sayılı Kanun",
+                "title": "Petrol Piyasası Kanunu",
+                "summary": "Petrol Piyasası Kanunu"
+            }
+        ],
         "related_forms": [
             "el_koyma",
             "yakalama",

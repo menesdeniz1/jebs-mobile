@@ -96,29 +96,21 @@ class InMemorySearchEngine implements SearchEngine {
                 });
             }
 
-            // Search law articles within events
+            // Search law articles within events (structured format)
             if (event.legal_references) {
-                const refs = typeof event.legal_references === 'string'
-                    ? event.legal_references
-                    : Array.isArray(event.legal_references)
-                        ? event.legal_references.map((r) => `${r.article} ${r.title} ${r.summary}`).join(' ')
-                        : '';
-                if (matches(refs, query)) {
-                    // Extract individual article matches
-                    const lines = refs.split('\n').filter((l: string) => l.trim());
-                    for (const line of lines) {
-                        if (matches(line, query) && line.includes('Madde')) {
-                            const existing = lawResults.find((r) => r.title === line.trim().replace(/\*\*/g, ''));
-                            if (!existing) {
-                                lawResults.push({
-                                    id: `${event.id}_law_${lawResults.length}`,
-                                    type: 'law_article',
-                                    title: line.trim().replace(/\*\*/g, '').split('—')[0].trim(),
-                                    subtitle: line.trim().replace(/\*\*/g, '').split('—')[1]?.trim(),
-                                    route: '/guide/event/[eventId]',
-                                    routeParams: { eventId: event.id },
-                                });
-                            }
+                for (const ref of event.legal_references) {
+                    const refText = `${ref.article} ${ref.title} ${ref.summary} ${ref.penalty || ''}`;
+                    if (matches(refText, query)) {
+                        const existing = lawResults.find((r) => r.title === ref.article);
+                        if (!existing) {
+                            lawResults.push({
+                                id: `${event.id}_law_${lawResults.length}`,
+                                type: 'law_article',
+                                title: ref.article,
+                                subtitle: ref.penalty || ref.title,
+                                route: '/guide/event/[eventId]',
+                                routeParams: { eventId: event.id },
+                            });
                         }
                     }
                 }
