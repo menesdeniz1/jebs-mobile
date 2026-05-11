@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
-import { Download, Share2 } from 'lucide-react-native';
-import { showSuccess, showError } from '../../components/ui/Toast';
+import { Download, Share2, CheckCircle } from 'lucide-react-native';
+import * as FileSystem from 'expo-file-system/legacy';
+import { showSuccess, showError, showInfo } from '../../components/ui/Toast';
 import { useTheme, FontFamily, FontSize, Spacing, BorderRadius } from '../../constants/theme';
 import { sharePDF } from '../../lib/pdf';
 
@@ -10,15 +11,63 @@ export default function PDFPreviewScreen() {
     const { colors } = useTheme();
     const router = useRouter();
     const { filePath, title } = useLocalSearchParams<{ filePath: string; title: string }>();
+    const [savedPath, setSavedPath] = useState<string | null>(null);
+    const [saving, setSaving] = useState(false);
 
-    const handleSave = () => {
-        showSuccess('PDF cihaza kaydedildi');
+    const handleSave = async () => {
+        if (!filePath) {
+            showError('PDF dosyası bulunamadı');
+            return;
+        }
+
+        // Web platform — expo-file-system doesn't support document directory
+        if (Platform.OS === 'web') {
+            showInfo('Web sürümünde Paylaş butonunu kullanın');
+            return;
+        }
+
+        setSaving(true);
+        try {
+            // Create a persistent directory for saved PDFs
+            const saveDir = `${FileSystem.documentDirectory}pdfs/`;
+            const dirInfo = await FileSystem.getInfoAsync(saveDir);
+            if (!dirInfo.exists) {
+                await FileSystem.makeDirectoryAsync(saveDir, { intermediates: true });
+            }
+
+            // Generate a filename from title + timestamp
+            const safeTitle = (title || 'tutanak')
+                .replace(/[^a-zA-ZçÇğĞıİöÖşŞüÜ0-9\s]/g, '')
+                .replace(/\s+/g, '_')
+                .substring(0, 40);
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);
+            const filename = `${safeTitle}_${timestamp}.pdf`;
+            const destPath = `${saveDir}${filename}`;
+
+            await FileSystem.copyAsync({ from: filePath, to: destPath });
+
+            // Verify the file was actually written
+            const savedInfo = await FileSystem.getInfoAsync(destPath);
+            if (!savedInfo.exists) {
+                throw new Error('File copy verification failed');
+            }
+
+            setSavedPath(destPath);
+            showSuccess('PDF cihaza kaydedildi');
+        } catch (error) {
+            console.error('PDF save failed:', error);
+            showError('PDF kaydedilemedi, lütfen tekrar deneyin');
+        } finally {
+            setSaving(false);
+        }
     };
 
     const handleShare = async () => {
-        if (filePath) {
+        // Prefer the saved copy if available, else use temp file
+        const shareUri = savedPath || filePath;
+        if (shareUri) {
             try {
-                await sharePDF(filePath);
+                await sharePDF(shareUri);
             } catch {
                 showError('Paylaşım başarısız oldu');
             }
@@ -37,20 +86,34 @@ export default function PDFPreviewScreen() {
                         <Text style={[styles.previewText, { color: colors.textSecondary, fontFamily: FontFamily.regular }]}>
                             {title}
                         </Text>
-                        <Text style={[styles.previewPath, { color: colors.textSecondary, fontFamily: FontFamily.regular }]}>
-                            {filePath}
-                        </Text>
+                        {savedPath && (
+                            <View style={styles.savedBadge}>
+                                <CheckCircle size={16} color="#2E7D32" />
+                                <Text style={[styles.savedText, { fontFamily: FontFamily.semibold }]}>
+                                    Cihaza kaydedildi
+                                </Text>
+                            </View>
+                        )}
                     </View>
                 </View>
 
                 <View style={[styles.bottomBar, { backgroundColor: colors.surface, borderTopColor: colors.border }]}>
                     <TouchableOpacity
-                        style={[styles.button, { backgroundColor: colors.primary }]}
+                        style={[
+                            styles.button,
+                            { backgroundColor: savedPath ? '#2E7D32' : colors.primary },
+                            saving && { opacity: 0.6 },
+                        ]}
                         onPress={handleSave}
+                        disabled={saving || !!savedPath}
                     >
-                        <Download size={20} color="#FFFFFF" />
+                        {savedPath ? (
+                            <CheckCircle size={20} color="#FFFFFF" />
+                        ) : (
+                            <Download size={20} color="#FFFFFF" />
+                        )}
                         <Text style={[styles.buttonText, { fontFamily: FontFamily.bold }]}>
-                            Cihaza Kaydet
+                            {saving ? 'Kaydediliyor...' : savedPath ? 'Kaydedildi ✓' : 'Cihaza Kaydet'}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -94,9 +157,19 @@ const styles = StyleSheet.create({
         fontSize: FontSize.subheading,
         marginBottom: Spacing.sm,
     },
-    previewPath: {
+    savedBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: Spacing.md,
+        paddingVertical: Spacing.xs,
+        paddingHorizontal: Spacing.md,
+        backgroundColor: '#E8F5E9',
+        borderRadius: BorderRadius.sm,
+        gap: Spacing.xs,
+    },
+    savedText: {
+        color: '#2E7D32',
         fontSize: FontSize.small,
-        textAlign: 'center',
     },
     bottomBar: {
         flexDirection: 'row',
