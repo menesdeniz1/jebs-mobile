@@ -6,8 +6,8 @@ import ListCard from '../../components/ui/ListCard';
 import SectionHeader from '../../components/ui/SectionHeader';
 import { useTheme, Spacing } from '../../constants/theme';
 import { useDraftsStore } from '../../store/draftsStore';
-import categories from '../../data/categories.json';
-import forms from '../../data/forms.json';
+import { getCategories, getForms } from '../../data/loader';
+import type { Category, FormTemplate } from '../../data/types';
 
 const categoryColors: Record<string, string> = {
     asayis: '#1565C0',
@@ -16,7 +16,8 @@ const categoryColors: Record<string, string> = {
     kacakcilik: '#E65100',
 };
 
-const quickForms = (forms as any[]).slice(0, 4);
+const categories = getCategories();
+const quickForms = getForms().slice(0, 4);
 
 export default function HomeScreen() {
     const { colors } = useTheme();
@@ -38,14 +39,14 @@ export default function HomeScreen() {
         >
             {/* Olay Rehberi */}
             <SectionHeader emoji="📋" title="Olay Rehberi" />
-            {(categories as any[]).map((cat: any) => (
+            {categories.map((cat: Category) => (
                 <ListCard
                     key={cat.id}
                     icon={<FolderOpen size={22} color={categoryColors[cat.id] || colors.primary} />}
                     title={cat.title}
                     subtitle={cat.description}
                     borderColor={categoryColors[cat.id] || colors.primary}
-                    onPress={() => router.push(`/guide/${cat.id}` as any)}
+                    onPress={() => router.push(`/guide/${cat.id}` as `/guide/${string}`)}
                 />
             ))}
 
@@ -54,15 +55,15 @@ export default function HomeScreen() {
                 emoji="📝"
                 title="Sık Kullanılan Tutanaklar"
                 actionLabel="Tümünü Gör"
-                onAction={() => router.push('/(tabs)/forms' as any)}
+                onAction={() => router.push('/(tabs)/forms')}
             />
-            {quickForms.map((form: any) => (
+            {quickForms.map((form: FormTemplate) => (
                 <ListCard
                     key={form.id}
                     icon={<FileText size={20} color={colors.primary} />}
                     title={form.title}
                     borderColor={colors.primary}
-                    onPress={() => router.push(`/form/${form.id}` as any)}
+                    onPress={() => router.push(`/form/${form.id}` as `/form/${string}`)}
                 />
             ))}
 
@@ -79,7 +80,7 @@ export default function HomeScreen() {
                             borderColor={colors.warning}
                             onPress={() =>
                                 router.push({
-                                    pathname: '/form/[templateId]' as any,
+                                    pathname: '/form/[templateId]',
                                     params: { templateId: draft.templateId, draftId: draft.id },
                                 })
                             }

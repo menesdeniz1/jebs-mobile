@@ -11,7 +11,8 @@ import { useDraftsStore, Draft } from '../../store/draftsStore';
 import { useFavoritesStore } from '../../store/favoritesStore';
 import { validateForm } from '../../lib/validation';
 import { generatePDF, buildFormContentHTML, PDFData } from '../../lib/pdf';
-import forms from '../../data/forms.json';
+import { getFormById } from '../../data/loader';
+import type { FormTemplate, FormField as FormFieldType } from '../../data/types';
 
 export default function FormFillingScreen() {
     const { colors } = useTheme();
@@ -19,7 +20,7 @@ export default function FormFillingScreen() {
     const { templateId, draftId } = useLocalSearchParams<{ templateId: string; draftId?: string }>();
     const scrollRef = useRef<ScrollView>(null);
 
-    const template = (forms as any[]).find((f: any) => f.id === templateId);
+    const template = getFormById(templateId);
     const saveDraft = useDraftsStore((s) => s.save);
     const drafts = useDraftsStore((s) => s.drafts);
 
@@ -114,7 +115,7 @@ export default function FormFillingScreen() {
             if (filePath) {
                 showSuccess('PDF oluşturuldu');
                 router.push({
-                    pathname: '/form/preview' as any,
+                    pathname: '/form/preview',
                     params: { filePath, title: template.title },
                 });
             } else {
@@ -136,7 +137,7 @@ export default function FormFillingScreen() {
     };
 
     // Group fields by their group value
-    const fieldGroups: Record<string, any[]> = {};
+    const fieldGroups: Record<string, FormFieldType[]> = {};
     const groupLabels: Record<string, string> = {
         location: 'Yer ve Zaman',
         officer: 'Düzenleyen Bilgileri',
@@ -198,7 +199,7 @@ export default function FormFillingScreen() {
                             <Text style={[styles.sectionTitle, { color: colors.primary, fontFamily: FontFamily.bold }]}>
                                 {groupLabels[groupKey] || groupKey}
                             </Text>
-                            {fields.map((field: any) => (
+                            {fields.map((field: FormFieldType) => (
                                 <FormField
                                     key={field.id}
                                     id={field.id}

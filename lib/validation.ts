@@ -33,13 +33,13 @@ export function validateField(
     // TC Kimlik validation
     if (fieldId.includes('tc') || fieldId.includes('kimlik')) {
         const result = tcKimlikSchema.safeParse(value);
-        if (!result.success) return result.error.errors[0].message;
+        if (!result.success) return result.error.issues[0].message;
     }
 
     // Sicil No validation
     if (fieldId === 'duzenleyen_sicil') {
         const result = sicilNoSchema.safeParse(value);
-        if (!result.success) return result.error.errors[0].message;
+        if (!result.success) return result.error.issues[0].message;
     }
 
     return null;

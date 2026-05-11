@@ -33,7 +33,7 @@ export default function SearchScreen() {
         if (query.length >= 2) {
             addQuery(query);
         }
-        router.push({ pathname: route as any, params });
+        router.push({ pathname: route as '/guide/event/[eventId]' | '/form/[templateId]', params });
     };
 
     const hasResults = results.events.length > 0 || results.forms.length > 0 || results.lawArticles.length > 0;

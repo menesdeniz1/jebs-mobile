@@ -9,8 +9,8 @@ import ListCard from '../../../components/ui/ListCard';
 import { showSuccess, showInfo } from '../../../components/ui/Toast';
 import { useTheme, FontFamily, FontSize, Spacing, BorderRadius } from '../../../constants/theme';
 import { useFavoritesStore } from '../../../store/favoritesStore';
-import events from '../../../data/events.json';
-import forms from '../../../data/forms.json';
+import { getEventById, getFormById } from '../../../data/loader';
+import type { Event, FormTemplate, Step } from '../../../data/types';
 
 const TABS = ['Tanım', 'Yapılacaklar', 'Evraklar', 'Kanun'] as const;
 type TabType = (typeof TABS)[number];
@@ -20,7 +20,7 @@ export default function EventDetailScreen() {
     const router = useRouter();
     const { eventId } = useLocalSearchParams<{ eventId: string }>();
 
-    const event = (events as any[]).find((e: any) => e.id === eventId);
+    const event = getEventById(eventId);
     const isFavorite = useFavoritesStore((s) => s.isFavorite(eventId));
     const toggleFavorite = useFavoritesStore((s) => s.toggle);
 
@@ -28,7 +28,7 @@ export default function EventDetailScreen() {
     const [checkedState, setCheckedState] = useState<boolean[]>(
         new Array(event?.steps?.length || 0).fill(false)
     );
-    const [selectedForm, setSelectedForm] = useState<any>(null);
+    const [selectedForm, setSelectedForm] = useState<FormTemplate | null>(null);
 
     if (!event) {
         return (
@@ -60,10 +60,21 @@ export default function EventDetailScreen() {
     // Parse legal references from string format
     const parseLegalRefs = () => {
         if (!event.legal_references) return [];
-        const text = typeof event.legal_references === 'string' ? event.legal_references : '';
+
+        // If already structured (post-migration), return as-is
+        if (Array.isArray(event.legal_references)) {
+            return event.legal_references.map((ref) => ({
+                article: ref.article,
+                title: ref.title,
+                summary: ref.summary,
+            }));
+        }
+
+        // Legacy string format — parse with regex
+        const text = event.legal_references;
         const lines = text.split('\n').filter((l: string) => l.trim());
         const refs: Array<{ article: string; title: string; summary: string }> = [];
-        let current: any = null;
+        let current: { article: string; title: string; summary: string } | null = null;
 
         for (const line of lines) {
             const clean = line.replace(/\*\*/g, '').trim();
@@ -86,9 +97,20 @@ export default function EventDetailScreen() {
 
     const relatedForms = event.related_forms
         ? event.related_forms
-            .map((fId: string) => (forms as any[]).find((f: any) => f.id === fId))
-            .filter(Boolean)
+            .map((fId: string) => getFormById(fId))
+            .filter((f): f is FormTemplate => f !== undefined)
         : [];
+
+    /** Get instruction steps for the checklist */
+    const getInstructionSteps = (): Array<{ order: number; text: string; is_critical: boolean }> => {
+        return event.steps
+            .filter((s: Step) => s.type === 'instruction')
+            .map((s) => ({
+                order: s.order,
+                text: s.text,
+                is_critical: (s as { is_critical?: boolean }).is_critical ?? false,
+            }));
+    };
 
     const renderContent = () => {
         switch (activeTab) {
@@ -115,7 +137,9 @@ export default function EventDetailScreen() {
                                     Savcı Görüşmesi
                                 </Text>
                                 <Text style={[styles.bodyText, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
-                                    {event.prosecutor_info.replace(/\*\*/g, '')}
+                                    {typeof event.prosecutor_info === 'string'
+                                        ? event.prosecutor_info.replace(/\*\*/g, '')
+                                        : `Ne zaman: ${event.prosecutor_info.when}\nNasıl: ${event.prosecutor_info.how}`}
                                 </Text>
                             </>
                         )}
@@ -126,7 +150,13 @@ export default function EventDetailScreen() {
                                     Tarafların Rolleri
                                 </Text>
                                 <Text style={[styles.bodyText, { color: colors.textPrimary, fontFamily: FontFamily.regular }]}>
-                                    {event.party_roles.replace(/\*\*/g, '')}
+                                    {typeof event.party_roles === 'string'
+                                        ? event.party_roles.replace(/\*\*/g, '')
+                                        : [
+                                            'Şüpheli: ' + event.party_roles.suspect.join(', '),
+                                            'Mağdur: ' + event.party_roles.victim.join(', '),
+                                            'Tanık: ' + event.party_roles.witness.join(', '),
+                                        ].join('\n\n')}
                                 </Text>
                             </>
                         )}
@@ -137,7 +167,7 @@ export default function EventDetailScreen() {
                 return (
                     <ScrollView contentContainerStyle={styles.tabContent}>
                         <StepChecklist
-                            steps={event.steps}
+                            steps={getInstructionSteps()}
                             checkedState={checkedState}
                             onToggle={handleCheckToggle}
                             onReset={handleCheckReset}
@@ -149,7 +179,7 @@ export default function EventDetailScreen() {
                 return (
                     <ScrollView contentContainerStyle={styles.tabContent}>
                         {relatedForms.length > 0 ? (
-                            relatedForms.map((form: any) => (
+                            relatedForms.map((form: FormTemplate) => (
                                 <ListCard
                                     key={form.id}
                                     icon={<FileText size={20} color={colors.primary} />}
@@ -169,8 +199,9 @@ export default function EventDetailScreen() {
                                 formTitle={selectedForm.title}
                                 formDescription={`Bu tutanağı doldurmak için aşağıdaki butona tıklayın.`}
                                 onFill={() => {
+                                    const formId = selectedForm.id;
                                     setSelectedForm(null);
-                                    router.push(`/form/${selectedForm.id}`);
+                                    router.push(`/form/${formId}`);
                                 }}
                                 onClose={() => setSelectedForm(null)}
                             />

@@ -4,9 +4,8 @@
  * SQLite FTS5 can be swapped in later without changing callers.
  */
 
-import categories from '../data/categories.json';
-import events from '../data/events.json';
-import forms from '../data/forms.json';
+import { getCategories, getEvents, getForms } from '../data/loader';
+import type { Event, Category, FormTemplate, Step } from '../data/types';
 
 // ── Types ──────────────────────────────────────────────
 
@@ -30,7 +29,7 @@ export interface GroupedResults {
 
 // ── Turkish Normalization ──────────────────────────────
 
-function normalizeTurkish(text: string): string {
+export function normalizeTurkish(text: string): string {
     return text
         .toLowerCase()
         .replace(/ı/g, 'i')
@@ -51,6 +50,11 @@ function matches(haystack: string, needle: string): boolean {
     return normalizeTurkish(haystack).includes(normalizeTurkish(needle));
 }
 
+/** Extract step text from polymorphic step */
+function getStepText(step: Step): string {
+    return step.text;
+}
+
 // ── Search Engine (in-memory, swappable) ───────────────
 
 export interface SearchEngine {
@@ -63,25 +67,30 @@ class InMemorySearchEngine implements SearchEngine {
             return { events: [], forms: [], lawArticles: [] };
         }
 
+        const categories = getCategories();
+        const events = getEvents();
+        const forms = getForms();
+
         const eventResults: SearchResult[] = [];
         const formResults: SearchResult[] = [];
         const lawResults: SearchResult[] = [];
 
         // Search events
-        for (const event of events as any[]) {
+        for (const event of events) {
             const searchable = [
                 event.title,
                 event.definition,
                 event.how_it_occurs,
-                ...(event.steps?.map((s: any) => s.text) || []),
+                ...(event.steps?.map(getStepText) || []),
             ].join(' ');
 
             if (matches(searchable, query)) {
+                const category = categories.find((c: Category) => c.id === event.category_id);
                 eventResults.push({
                     id: event.id,
                     type: 'event',
                     title: event.title,
-                    subtitle: categories.find((c: any) => c.id === event.category_id)?.title,
+                    subtitle: category?.title,
                     route: '/guide/event/[eventId]',
                     routeParams: { eventId: event.id },
                 });
@@ -92,7 +101,7 @@ class InMemorySearchEngine implements SearchEngine {
                 const refs = typeof event.legal_references === 'string'
                     ? event.legal_references
                     : Array.isArray(event.legal_references)
-                        ? event.legal_references.map((r: any) => `${r.article} ${r.title} ${r.summary}`).join(' ')
+                        ? event.legal_references.map((r) => `${r.article} ${r.title} ${r.summary}`).join(' ')
                         : '';
                 if (matches(refs, query)) {
                     // Extract individual article matches
@@ -117,7 +126,7 @@ class InMemorySearchEngine implements SearchEngine {
         }
 
         // Search forms
-        for (const form of forms as any[]) {
+        for (const form of forms) {
             if (matches(form.title, query)) {
                 formResults.push({
                     id: form.id,

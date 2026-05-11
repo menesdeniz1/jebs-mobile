@@ -6,7 +6,10 @@ import ListCard from '../../components/ui/ListCard';
 import SectionHeader from '../../components/ui/SectionHeader';
 import { useTheme, Spacing } from '../../constants/theme';
 import { useDraftsStore } from '../../store/draftsStore';
-import forms from '../../data/forms.json';
+import { getForms } from '../../data/loader';
+import type { FormTemplate } from '../../data/types';
+
+const forms = getForms();
 
 export default function FormsScreen() {
     const { colors } = useTheme();
@@ -23,13 +26,13 @@ export default function FormsScreen() {
             style={[styles.container, { backgroundColor: colors.background }]}
             contentContainerStyle={styles.content}
         >
-            {(forms as any[]).map((form: any) => (
+            {forms.map((form: FormTemplate) => (
                 <ListCard
                     key={form.id}
                     icon={<FileText size={20} color={colors.primary} />}
                     title={form.title}
                     borderColor={colors.primary}
-                    onPress={() => router.push(`/form/${form.id}` as any)}
+                    onPress={() => router.push(`/form/${form.id}` as `/form/${string}`)}
                 />
             ))}
 
@@ -45,7 +48,7 @@ export default function FormsScreen() {
                             borderColor={colors.warning}
                             onPress={() =>
                                 router.push({
-                                    pathname: '/form/[templateId]' as any,
+                                    pathname: '/form/[templateId]',
                                     params: { templateId: draft.templateId, draftId: draft.id },
                                 })
                             }
