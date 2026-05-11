@@ -1,4 +1,4 @@
-[
+﻿[
     {
         "id": "ust_arama",
         "title": "Üst Arama Tutanağı",
@@ -2034,5 +2034,25 @@
             }
         ],
         "order": 12
+    },
+    {
+        "id": "gorgu_tespit",
+        "title": "Görgü Tespit Tutanağı",
+        "category": "general",
+        "fields": [
+            { "id": "il", "label": "İl", "type": "text", "options": [], "required": true, "placeholder": "Örn: Ankara", "group": "location" },
+            { "id": "ilce", "label": "İlçe", "type": "text", "options": [], "required": true, "placeholder": "Örn: Çankaya", "group": "location" },
+            { "id": "mahalle_koy", "label": "Mahalle/Köy", "type": "text", "options": [], "required": false, "placeholder": "Mahalle veya köy adı", "group": "location" },
+            { "id": "tarih", "label": "Tarih", "type": "date", "options": [], "required": true, "placeholder": "", "group": "location" },
+            { "id": "saat", "label": "Saat", "type": "time", "options": [], "required": true, "placeholder": "", "group": "location" },
+            { "id": "duzenleyen_adsoyad", "label": "Düzenleyen Ad Soyad", "type": "text", "options": [], "required": true, "placeholder": "Ad Soyad", "group": "officer" },
+            { "id": "duzenleyen_rutbe", "label": "Rütbe", "type": "dropdown", "options": ["Er", "Çavuş", "Uzman Çavuş", "Astsubay", "Üsteğmen", "Yüzbaşı", "Binbaşı", "Yarbay", "Albay"], "required": true, "placeholder": "", "group": "officer" },
+            { "id": "duzenleyen_sicil", "label": "Sicil No", "type": "text", "options": [], "required": true, "placeholder": "Sicil numarası", "group": "officer" },
+            { "id": "olay_tanimi", "label": "Olayın Tanımı", "type": "textarea", "options": [], "required": true, "placeholder": "Görülen olayı açıklayın", "group": "details" },
+            { "id": "gorgu_yeri", "label": "Görgü Yeri", "type": "text", "options": [], "required": true, "placeholder": "Olayın gerçekleştiği yer", "group": "details" },
+            { "id": "ilk_mudahale", "label": "İlk Müdahale", "type": "textarea", "options": [], "required": false, "placeholder": "Yapılan ilk müdahale", "group": "details" },
+            { "id": "aciklama", "label": "Ek Açıklama", "type": "textarea", "options": [], "required": false, "placeholder": "Varsa ek bilgiler", "group": "details" }
+        ],
+        "order": 13
     }
 ]

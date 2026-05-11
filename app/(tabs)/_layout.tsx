@@ -1,33 +1,25 @@
 import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../../constants/theme';
-import { Platform } from 'react-native';
+import { Home, BookOpen, FileText, Star, Search } from 'lucide-react-native';
+import { useTheme, FontFamily } from '../../constants/theme';
 
-export default function TabsLayout() {
+export default function TabLayout() {
+    const { colors } = useTheme();
+
     return (
         <Tabs
             screenOptions={{
-                headerStyle: {
-                    backgroundColor: Colors.primary,
-                    elevation: 0,
-                    shadowOpacity: 0,
-                },
-                headerTintColor: Colors.textLight,
-                headerTitleStyle: { fontWeight: '700', fontSize: 18 },
-                tabBarActiveTintColor: Colors.primary,
-                tabBarInactiveTintColor: Colors.textSecondary,
+                headerStyle: { backgroundColor: colors.primary },
+                headerTintColor: colors.textOnPrimary,
+                headerTitleStyle: { fontWeight: '700', fontSize: 17 },
+                headerShadowVisible: false,
+                tabBarActiveTintColor: colors.primary,
+                tabBarInactiveTintColor: colors.textSecondary,
                 tabBarStyle: {
-                    backgroundColor: Colors.surface,
-                    borderTopWidth: 1,
-                    borderTopColor: Colors.border,
-                    height: Platform.OS === 'ios' ? 88 : 64,
-                    paddingBottom: Platform.OS === 'ios' ? 28 : 8,
-                    paddingTop: 8,
-                    elevation: 8,
-                    shadowColor: '#000',
-                    shadowOffset: { width: 0, height: -2 },
-                    shadowOpacity: 0.1,
-                    shadowRadius: 4,
+                    backgroundColor: colors.surface,
+                    borderTopColor: colors.border,
+                    height: 60,
+                    paddingBottom: 8,
+                    paddingTop: 4,
                 },
                 tabBarLabelStyle: {
                     fontSize: 11,
@@ -39,10 +31,8 @@ export default function TabsLayout() {
                 name="index"
                 options={{
                     title: 'Ana Sayfa',
-                    headerTitle: 'Jandarma Saha Rehberi',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" size={size} color={color} />
-                    ),
+                    headerTitle: 'Jandarma Kolluk Kılavuzu',
+                    tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
                 }}
             />
             <Tabs.Screen
@@ -50,19 +40,15 @@ export default function TabsLayout() {
                 options={{
                     title: 'Rehber',
                     headerTitle: 'Olay Rehberi',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="book" size={size} color={color} />
-                    ),
+                    tabBarIcon: ({ color, size }) => <BookOpen size={size} color={color} />,
                 }}
             />
             <Tabs.Screen
                 name="forms"
                 options={{
-                    title: 'Formlar',
-                    headerTitle: 'Tutanak & Formlar',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="document-text" size={size} color={color} />
-                    ),
+                    title: 'Tutanaklar',
+                    headerTitle: 'Tutanak ve Formlar',
+                    tabBarIcon: ({ color, size }) => <FileText size={size} color={color} />,
                 }}
             />
             <Tabs.Screen
@@ -70,9 +56,15 @@ export default function TabsLayout() {
                 options={{
                     title: 'Favoriler',
                     headerTitle: 'Favorilerim',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="star" size={size} color={color} />
-                    ),
+                    tabBarIcon: ({ color, size }) => <Star size={size} color={color} />,
+                }}
+            />
+            <Tabs.Screen
+                name="search"
+                options={{
+                    title: 'Arama',
+                    headerTitle: 'Arama',
+                    tabBarIcon: ({ color, size }) => <Search size={size} color={color} />,
                 }}
             />
         </Tabs>

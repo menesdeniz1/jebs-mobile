@@ -1,21 +1,37 @@
-export const Colors = {
+import { useColorScheme } from 'react-native';
+
+export const LightColors = {
     primary: '#1B5E20',
     primaryLight: '#2E7D32',
-    primaryDark: '#0D3B12',
     secondary: '#FFFFFF',
     accent: '#D32F2F',
-    accentLight: '#E57373',
     background: '#F5F5F5',
     surface: '#FFFFFF',
-    text: '#212121',
+    textPrimary: '#212121',
     textSecondary: '#757575',
-    textLight: '#FFFFFF',
+    textOnPrimary: '#FFFFFF',
     border: '#E0E0E0',
+    success: '#388E3C',
+    warning: '#F57C00',
     divider: '#EEEEEE',
-    success: '#4CAF50',
-    warning: '#FF9800',
-    info: '#2196F3',
     cardShadow: 'rgba(0,0,0,0.08)',
+};
+
+export const DarkColors: typeof LightColors = {
+    primary: '#2E7D32',
+    primaryLight: '#388E3C',
+    secondary: '#1E1E1E',
+    accent: '#EF5350',
+    background: '#121212',
+    surface: '#1E1E1E',
+    textPrimary: '#E0E0E0',
+    textSecondary: '#9E9E9E',
+    textOnPrimary: '#FFFFFF',
+    border: '#333333',
+    success: '#4CAF50',
+    warning: '#FFB74D',
+    divider: '#2C2C2C',
+    cardShadow: 'rgba(0,0,0,0.3)',
 };
 
 export const Spacing = {
@@ -37,18 +53,23 @@ export const BorderRadius = {
 };
 
 export const FontSize = {
-    xs: 11,
-    sm: 13,
-    md: 15,
-    lg: 17,
+    small: 11,
+    body: 13,
+    subheading: 14,
+    heading: 18,
     xl: 20,
     xxl: 24,
-    hero: 28,
 };
 
-export const FontWeight = {
-    regular: '400' as const,
-    medium: '500' as const,
-    semibold: '600' as const,
-    bold: '700' as const,
+export const FontFamily = {
+    regular: 'NotoSans-Regular',
+    semibold: 'NotoSans-SemiBold',
+    bold: 'NotoSans-Bold',
 };
+
+export function useTheme() {
+    const colorScheme = useColorScheme();
+    const isDark = colorScheme === 'dark';
+    const colors = isDark ? DarkColors : LightColors;
+    return { colors, isDark };
+}

@@ -1,138 +1,154 @@
+/**
+ * Search module with Turkish character normalization.
+ * Uses in-memory search. The interface is designed so that
+ * SQLite FTS5 can be swapped in later without changing callers.
+ */
+
 import categories from '../data/categories.json';
 import events from '../data/events.json';
 import forms from '../data/forms.json';
 
-const turkishCharMap: Record<string, string> = {
-    'ı': 'i', 'İ': 'i',
-    'ö': 'o', 'Ö': 'o',
-    'ü': 'u', 'Ü': 'u',
-    'ş': 's', 'Ş': 's',
-    'ç': 'c', 'Ç': 'c',
-    'ğ': 'g', 'Ğ': 'g',
-};
+// ── Types ──────────────────────────────────────────────
+
+export type SearchResultType = 'event' | 'form' | 'law_article';
+
+export interface SearchResult {
+    id: string;
+    type: SearchResultType;
+    title: string;
+    subtitle?: string;
+    /** navigation target */
+    route: string;
+    routeParams: Record<string, string>;
+}
+
+export interface GroupedResults {
+    events: SearchResult[];
+    forms: SearchResult[];
+    lawArticles: SearchResult[];
+}
+
+// ── Turkish Normalization ──────────────────────────────
 
 function normalizeTurkish(text: string): string {
     return text
         .toLowerCase()
-        .replace(/[ıİöÖüÜşŞçÇğĞ]/g, (char) => turkishCharMap[char] || char);
+        .replace(/ı/g, 'i')
+        .replace(/İ/g, 'i')
+        .replace(/ö/g, 'o')
+        .replace(/Ö/g, 'o')
+        .replace(/ü/g, 'u')
+        .replace(/Ü/g, 'u')
+        .replace(/ç/g, 'c')
+        .replace(/Ç/g, 'c')
+        .replace(/ş/g, 's')
+        .replace(/Ş/g, 's')
+        .replace(/ğ/g, 'g')
+        .replace(/Ğ/g, 'g');
 }
 
-export interface SearchResult {
-    id: string;
-    title: string;
-    type: 'event' | 'form' | 'category';
-    categoryId?: string;
-    description: string;
-    matchField: string;
+function matches(haystack: string, needle: string): boolean {
+    return normalizeTurkish(haystack).includes(normalizeTurkish(needle));
 }
 
-export function searchAll(query: string): SearchResult[] {
-    if (!query || query.trim().length < 2) return [];
+// ── Search Engine (in-memory, swappable) ───────────────
 
-    const normalizedQuery = normalizeTurkish(query.trim());
-    const results: SearchResult[] = [];
+export interface SearchEngine {
+    search(query: string): GroupedResults;
+}
 
-    // Search categories
-    for (const cat of categories) {
-        if (
-            normalizeTurkish(cat.title).includes(normalizedQuery) ||
-            normalizeTurkish(cat.description).includes(normalizedQuery)
-        ) {
-            results.push({
-                id: cat.id,
-                title: cat.title,
-                type: 'category',
-                description: cat.description,
-                matchField: 'Kategori',
-            });
+class InMemorySearchEngine implements SearchEngine {
+    search(query: string): GroupedResults {
+        if (!query || query.length < 2) {
+            return { events: [], forms: [], lawArticles: [] };
         }
-    }
 
-    // Search events
-    for (const event of events) {
-        const searchFields = [
-            { field: 'Başlık', value: event.title },
-            { field: 'Tanım', value: event.definition },
-            { field: 'Nasıl Olur', value: event.how_it_occurs },
-            { field: 'Savcı İletişimi', value: event.prosecutor_info },
-            { field: 'Taraf Hakları', value: event.party_roles },
-            { field: 'Kanun Maddeleri', value: event.legal_references },
-        ];
+        const eventResults: SearchResult[] = [];
+        const formResults: SearchResult[] = [];
+        const lawResults: SearchResult[] = [];
 
-        for (const { field, value } of searchFields) {
-            if (normalizeTurkish(value).includes(normalizedQuery)) {
-                // Avoid duplicates
-                if (!results.find((r) => r.id === event.id && r.type === 'event')) {
-                    results.push({
-                        id: event.id,
-                        title: event.title,
-                        type: 'event',
-                        categoryId: event.category_id,
-                        description: event.definition.substring(0, 120) + '...',
-                        matchField: field,
-                    });
+        // Search events
+        for (const event of events as any[]) {
+            const searchable = [
+                event.title,
+                event.definition,
+                event.how_it_occurs,
+                ...(event.steps?.map((s: any) => s.text) || []),
+            ].join(' ');
+
+            if (matches(searchable, query)) {
+                eventResults.push({
+                    id: event.id,
+                    type: 'event',
+                    title: event.title,
+                    subtitle: categories.find((c: any) => c.id === event.category_id)?.title,
+                    route: '/guide/event/[eventId]',
+                    routeParams: { eventId: event.id },
+                });
+            }
+
+            // Search law articles within events
+            if (event.legal_references) {
+                const refs = typeof event.legal_references === 'string'
+                    ? event.legal_references
+                    : Array.isArray(event.legal_references)
+                        ? event.legal_references.map((r: any) => `${r.article} ${r.title} ${r.summary}`).join(' ')
+                        : '';
+                if (matches(refs, query)) {
+                    // Extract individual article matches
+                    const lines = refs.split('\n').filter((l: string) => l.trim());
+                    for (const line of lines) {
+                        if (matches(line, query) && line.includes('Madde')) {
+                            const existing = lawResults.find((r) => r.title === line.trim().replace(/\*\*/g, ''));
+                            if (!existing) {
+                                lawResults.push({
+                                    id: `${event.id}_law_${lawResults.length}`,
+                                    type: 'law_article',
+                                    title: line.trim().replace(/\*\*/g, '').split('—')[0].trim(),
+                                    subtitle: line.trim().replace(/\*\*/g, '').split('—')[1]?.trim(),
+                                    route: '/guide/event/[eventId]',
+                                    routeParams: { eventId: event.id },
+                                });
+                            }
+                        }
+                    }
                 }
-                break;
             }
         }
 
-        // Search steps
-        for (const step of event.steps) {
-            if (normalizeTurkish(step.text).includes(normalizedQuery)) {
-                if (!results.find((r) => r.id === event.id && r.type === 'event')) {
-                    results.push({
-                        id: event.id,
-                        title: event.title,
-                        type: 'event',
-                        categoryId: event.category_id,
-                        description: `Adım ${step.order}: ${step.text}`,
-                        matchField: 'İşlem Adımı',
-                    });
-                }
-                break;
+        // Search forms
+        for (const form of forms as any[]) {
+            if (matches(form.title, query)) {
+                formResults.push({
+                    id: form.id,
+                    type: 'form',
+                    title: form.title,
+                    route: '/form/[templateId]',
+                    routeParams: { templateId: form.id },
+                });
             }
         }
-    }
 
-    // Search forms
-    for (const form of forms) {
-        if (normalizeTurkish(form.title).includes(normalizedQuery)) {
-            results.push({
-                id: form.id,
-                title: form.title,
-                type: 'form',
-                description: `${form.fields.length} alan içeren form şablonu`,
-                matchField: 'Form Başlığı',
-            });
-        }
+        return {
+            events: eventResults,
+            forms: formResults,
+            lawArticles: lawResults,
+        };
     }
-
-    return results;
 }
 
-export function getAutocompleteSuggestions(query: string): string[] {
-    if (!query || query.trim().length < 1) return [];
+// Singleton — swap this implementation for FTS5 later
+let engine: SearchEngine = new InMemorySearchEngine();
 
-    const normalizedQuery = normalizeTurkish(query.trim());
-    const suggestions: Set<string> = new Set();
+export function getSearchEngine(): SearchEngine {
+    return engine;
+}
 
-    for (const event of events) {
-        if (normalizeTurkish(event.title).includes(normalizedQuery)) {
-            suggestions.add(event.title);
-        }
-    }
+export function setSearchEngine(newEngine: SearchEngine): void {
+    engine = newEngine;
+}
 
-    for (const form of forms) {
-        if (normalizeTurkish(form.title).includes(normalizedQuery)) {
-            suggestions.add(form.title);
-        }
-    }
-
-    for (const cat of categories) {
-        if (normalizeTurkish(cat.title).includes(normalizedQuery)) {
-            suggestions.add(cat.title);
-        }
-    }
-
-    return Array.from(suggestions).slice(0, 8);
+/** Convenience function */
+export function search(query: string): GroupedResults {
+    return engine.search(query);
 }

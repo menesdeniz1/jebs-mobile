@@ -1,26 +1,51 @@
 import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useAppStore } from '../lib/store';
-import { Colors } from '../constants/theme';
+import {
+    useFonts,
+    NotoSans_400Regular,
+    NotoSans_600SemiBold,
+    NotoSans_700Bold,
+} from '@expo-google-fonts/noto-sans';
+import Toast from 'react-native-toast-message';
+import { toastConfig } from '../components/ui/Toast';
+import { useFavoritesStore } from '../store/favoritesStore';
+import { useDraftsStore } from '../store/draftsStore';
+import { useSearchStore } from '../store/searchStore';
+import { useTheme } from '../constants/theme';
 
 export default function RootLayout() {
-    const loadPersistedData = useAppStore((s) => s.loadPersistedData);
+    const { colors, isDark } = useTheme();
+    const loadFavorites = useFavoritesStore((s) => s.load);
+    const loadDrafts = useDraftsStore((s) => s.load);
+    const loadSearch = useSearchStore((s) => s.load);
+
+    const [fontsLoaded] = useFonts({
+        'NotoSans-Regular': NotoSans_400Regular,
+        'NotoSans-SemiBold': NotoSans_600SemiBold,
+        'NotoSans-Bold': NotoSans_700Bold,
+    });
 
     useEffect(() => {
-        loadPersistedData();
+        loadFavorites();
+        loadDrafts();
+        loadSearch();
     }, []);
+
+    if (!fontsLoaded) {
+        return null;
+    }
 
     return (
         <>
-            <StatusBar style="light" backgroundColor={Colors.primary} />
+            <StatusBar style={isDark ? 'light' : 'light'} backgroundColor={colors.primary} />
             <Stack
                 screenOptions={{
-                    headerStyle: { backgroundColor: Colors.primary },
-                    headerTintColor: Colors.textLight,
+                    headerStyle: { backgroundColor: colors.primary },
+                    headerTintColor: colors.textOnPrimary,
                     headerTitleStyle: { fontWeight: '600', fontSize: 17 },
                     headerShadowVisible: false,
-                    contentStyle: { backgroundColor: Colors.background },
+                    contentStyle: { backgroundColor: colors.background },
                 }}
             >
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -37,13 +62,11 @@ export default function RootLayout() {
                     options={{ title: 'Form Doldur' }}
                 />
                 <Stack.Screen
-                    name="search"
-                    options={{
-                        title: 'Arama',
-                        presentation: 'modal',
-                    }}
+                    name="form/preview"
+                    options={{ title: 'PDF Önizleme', presentation: 'modal' }}
                 />
             </Stack>
+            <Toast config={toastConfig} />
         </>
     );
 }
