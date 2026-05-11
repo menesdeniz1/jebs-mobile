@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loadFromStorage, persistToStorage } from './persistence';
 
 export interface Draft {
     id: string;
@@ -20,37 +20,29 @@ interface DraftsState {
     getRecent: (count: number) => Draft[];
 }
 
-const STORAGE_KEY = '@jebs_drafts';
-
-const persist = (drafts: Draft[]) => {
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(drafts)).catch(console.error);
-};
+const STORAGE_KEY = '@gendarme:drafts:v1';
 
 export const useDraftsStore = create<DraftsState>((set, get) => ({
     drafts: [],
     loaded: false,
 
     load: async () => {
-        try {
-            const raw = await AsyncStorage.getItem(STORAGE_KEY);
-            set({ drafts: raw ? JSON.parse(raw) : [], loaded: true });
-        } catch {
-            set({ loaded: true });
-        }
+        const drafts = await loadFromStorage<Draft[]>(STORAGE_KEY, []);
+        set({ drafts, loaded: true });
     },
 
     save: (draft) => {
         const state = get();
         const filtered = state.drafts.filter((d) => d.id !== draft.id);
         const next = [draft, ...filtered];
-        persist(next);
         set({ drafts: next });
+        persistToStorage(STORAGE_KEY, next);
     },
 
     remove: (id) => {
         const next = get().drafts.filter((d) => d.id !== id);
-        persist(next);
         set({ drafts: next });
+        persistToStorage(STORAGE_KEY, next);
     },
 
     getByTemplate: (templateId) => {

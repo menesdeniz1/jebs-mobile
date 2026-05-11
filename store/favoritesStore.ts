@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loadFromStorage, persistToStorage } from './persistence';
 
 export type FavoriteType = 'event_type' | 'form_template' | 'draft' | 'law_article';
 
@@ -21,23 +21,15 @@ interface FavoritesState {
     getByType: (type: FavoriteType) => Favorite[];
 }
 
-const STORAGE_KEY = '@jebs_favorites';
-
-const persist = (favorites: Favorite[]) => {
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(favorites)).catch(console.error);
-};
+const STORAGE_KEY = '@gendarme:favorites:v1';
 
 export const useFavoritesStore = create<FavoritesState>((set, get) => ({
     favorites: [],
     loaded: false,
 
     load: async () => {
-        try {
-            const raw = await AsyncStorage.getItem(STORAGE_KEY);
-            set({ favorites: raw ? JSON.parse(raw) : [], loaded: true });
-        } catch {
-            set({ loaded: true });
-        }
+        const favorites = await loadFromStorage<Favorite[]>(STORAGE_KEY, []);
+        set({ favorites, loaded: true });
     },
 
     toggle: (type, referenceId, title) => {
@@ -58,8 +50,8 @@ export const useFavoritesStore = create<FavoritesState>((set, get) => ({
                 },
             ];
         }
-        persist(next);
         set({ favorites: next });
+        persistToStorage(STORAGE_KEY, next);
     },
 
     isFavorite: (referenceId) => {
@@ -68,8 +60,8 @@ export const useFavoritesStore = create<FavoritesState>((set, get) => ({
 
     remove: (referenceId) => {
         const next = get().favorites.filter((f) => f.referenceId !== referenceId);
-        persist(next);
         set({ favorites: next });
+        persistToStorage(STORAGE_KEY, next);
     },
 
     getByType: (type) => {

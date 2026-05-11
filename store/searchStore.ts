@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loadFromStorage, persistToStorage, removeFromStorage } from './persistence';
 
 interface SearchState {
     history: string[];
@@ -9,7 +9,7 @@ interface SearchState {
     clear: () => void;
 }
 
-const STORAGE_KEY = '@jebs_search_history';
+const STORAGE_KEY = '@gendarme:search_history:v1';
 const MAX_HISTORY = 10;
 
 export const useSearchStore = create<SearchState>((set, get) => ({
@@ -17,24 +17,20 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     loaded: false,
 
     load: async () => {
-        try {
-            const raw = await AsyncStorage.getItem(STORAGE_KEY);
-            set({ history: raw ? JSON.parse(raw) : [], loaded: true });
-        } catch {
-            set({ loaded: true });
-        }
+        const history = await loadFromStorage<string[]>(STORAGE_KEY, []);
+        set({ history, loaded: true });
     },
 
     addQuery: (query) => {
         const state = get();
         const filtered = state.history.filter((q) => q !== query);
         const next = [query, ...filtered].slice(0, MAX_HISTORY);
-        AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(console.error);
         set({ history: next });
+        persistToStorage(STORAGE_KEY, next);
     },
 
     clear: () => {
-        AsyncStorage.removeItem(STORAGE_KEY).catch(console.error);
         set({ history: [] });
+        removeFromStorage(STORAGE_KEY);
     },
 }));
