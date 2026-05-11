@@ -6,7 +6,7 @@ import { useTheme, FontFamily, FontSize, Spacing, BorderRadius } from '../../con
 interface FormFieldProps {
     id: string;
     label: string;
-    type: 'text' | 'textarea' | 'date' | 'time' | 'dropdown' | 'checkbox';
+    type: 'text' | 'textarea' | 'date' | 'time' | 'dropdown' | 'checkbox' | 'number';
     value: string;
     placeholder?: string;
     options?: string[];
@@ -166,6 +166,19 @@ export default function FormField({
                             {label}
                         </Text>
                     </TouchableOpacity>
+                );
+
+            case 'number':
+                return (
+                    <TextInput
+                        style={inputStyle}
+                        value={value}
+                        onChangeText={onChange}
+                        placeholder={placeholder}
+                        placeholderTextColor={colors.textSecondary}
+                        keyboardType="numeric"
+                        autoCapitalize="none"
+                    />
                 );
 
             default:

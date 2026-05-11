@@ -94,7 +94,7 @@ export interface Event {
 
 // ── Forms ─────────────────────────────────────────────
 
-export type FormFieldType = 'text' | 'textarea' | 'date' | 'time' | 'dropdown' | 'checkbox';
+export type FormFieldType = 'text' | 'textarea' | 'date' | 'time' | 'dropdown' | 'checkbox' | 'number';
 
 export type FormFieldGroup =
   | 'location'

@@ -31,9 +31,9 @@ export interface GroupedResults {
 
 export function normalizeTurkish(text: string): string {
     return text
+        .replace(/İ/g, 'I')
         .toLowerCase()
         .replace(/ı/g, 'i')
-        .replace(/İ/g, 'i')
         .replace(/ö/g, 'o')
         .replace(/Ö/g, 'o')
         .replace(/ü/g, 'u')

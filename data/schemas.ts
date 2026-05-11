@@ -115,7 +115,7 @@ export const FormFieldGroupSchema = z.enum([
 ]);
 
 export const FormFieldTypeSchema = z.enum([
-  'text', 'textarea', 'date', 'time', 'dropdown', 'checkbox',
+  'text', 'textarea', 'date', 'time', 'dropdown', 'checkbox', 'number',
 ]);
 
 export const FormFieldSchema = z.object({
