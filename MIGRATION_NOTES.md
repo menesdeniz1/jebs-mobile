@@ -6,11 +6,21 @@
 
 ## Decision-Tree Format
 
-*(Will be documented in Phase 4)*
+Decision-tree events use polymorphic `Step` types:
+- **`instruction`** — linear checkbox step (same as legacy, but with explicit `type` field)
+- **`question`** — branch point with 2+ labeled options, each pointing to a `next_order`
+- **`terminal`** — end node with an `outcome` (one of: `close_file`, `continue_investigation`, `refer_to_prosecutor`)
+
+The `DecisionTreeWalker` component navigates these step-by-step. Events with only `instruction` steps still use the flat `StepChecklist`.
 
 ## Content Needing Expert Review
 
-*(Placeholder decision-tree steps will be listed here)*
+| Event ID | Title | Branch Points | Status |
+|----------|-------|---------------|--------|
+| `darp` | [TASLAK] Darp (Kasten Yaralama) | Q6: Şüpheli olay yerinde mi? (Evet→7, Hayır→10) · Q14: Basit tıbbi müdahale? (Evet→15-şikâyet, Hayır→16-re'sen) | ⚠ Needs legal expert review |
+| `uyusturucu` | [TASLAK] Uyuşturucu Madde | Q8: Kullanım miktarını aşıyor mu? (Evet→9-ticaret, Hayır→12-kullanım) | ⚠ Needs legal expert review |
+
+**All other 11 events** remain in linear (instruction-only) format and are unaffected.
 
 ## Legacy AsyncStorage Keys → New Keys
 

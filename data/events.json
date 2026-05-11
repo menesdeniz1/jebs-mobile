@@ -2,69 +2,111 @@
     {
         "id": "darp",
         "category_id": "asayis",
-        "title": "Darp (Kasten Yaralama)",
+        "title": "[TASLAK] Darp (Kasten Yaralama)",
         "definition": "Kasten yaralama, bir kişinin vücut bütünlüğüne veya sağlığına yönelik kasıtlı saldırı fiilidir. Türk Ceza Kanunu'nun 86. maddesi kapsamında düzenlenmiştir. Basit tıbbi müdahale ile giderilebilecek yaralamalarda şikâyete bağlı suç niteliği taşırken, ağır yaralanmalarda re'sen soruşturma yapılır.",
         "how_it_occurs": "• Kişiler arası tartışma ve kavga sonucu\n• Aile içi şiddet kapsamında\n• Alkol/madde etkisi altında saldırı\n• Komşuluk anlaşmazlıkları\n• Trafik kazası sonrası tartışma\n• İş yeri anlaşmazlıkları",
         "steps": [
             {
+                "type": "instruction",
                 "order": 1,
                 "text": "Olay yerine intikal edin ve güvenliği sağlayın",
                 "is_critical": true
             },
             {
+                "type": "instruction",
                 "order": 2,
                 "text": "Yaralı varsa ilk yardım yapın ve 112'yi arayın",
                 "is_critical": true
             },
             {
+                "type": "instruction",
                 "order": 3,
                 "text": "Tarafları ayırın ve güvenli mesafede tutun",
                 "is_critical": false
             },
             {
+                "type": "instruction",
                 "order": 4,
                 "text": "Olay yerini koruma altına alın",
                 "is_critical": false
             },
             {
+                "type": "instruction",
                 "order": 5,
                 "text": "Cumhuriyet Savcısına bilgi verin",
                 "is_critical": true
             },
             {
+                "type": "question",
                 "order": 6,
-                "text": "Görgü tanıklarını tespit edin",
-                "is_critical": false
+                "text": "Şüpheli olay yerinde mi?",
+                "branches": [
+                    { "label": "Evet — Olay yerinde", "next_order": 7 },
+                    { "label": "Hayır — Kaçmış", "next_order": 10 }
+                ]
             },
             {
+                "type": "instruction",
                 "order": 7,
-                "text": "Tarafların ve tanıkların kimlik bilgilerini alın",
+                "text": "Şüpheliyi yakalayın ve haklarını okuyun",
+                "is_critical": true
+            },
+            {
+                "type": "instruction",
+                "order": 8,
+                "text": "Görgü tanıklarını tespit edin, kimlik bilgilerini alın",
                 "is_critical": false
             },
             {
-                "order": 8,
+                "type": "instruction",
+                "order": 9,
                 "text": "Mağduru hastaneye sevk edin, sağlık raporu aldırın",
                 "is_critical": true
             },
             {
-                "order": 9,
+                "type": "instruction",
+                "order": 10,
+                "text": "Şüphelinin eşkâlini belirleyin ve arama başlatın",
+                "is_critical": true
+            },
+            {
+                "type": "instruction",
+                "order": 11,
                 "text": "Olay yeri incelemesi yapın (fotoğraf, delil tespiti)",
                 "is_critical": false
             },
             {
-                "order": 10,
-                "text": "Şüpheli ve tanık ifadelerini alın",
-                "is_critical": false
-            },
-            {
-                "order": 11,
+                "type": "instruction",
+                "order": 12,
                 "text": "Varsa güvenlik kamerası görüntülerini temin edin",
                 "is_critical": false
             },
             {
-                "order": 12,
-                "text": "Tutanakları düzenleyin ve savcılığa gönderin",
+                "type": "instruction",
+                "order": 13,
+                "text": "Şüpheli ve tanık ifadelerini alın",
                 "is_critical": false
+            },
+            {
+                "type": "question",
+                "order": 14,
+                "text": "Yaralama basit tıbbi müdahale ile giderilebilir mi?",
+                "branches": [
+                    { "label": "Evet — Basit yaralama (şikâyete bağlı)", "next_order": 15 },
+                    { "label": "Hayır — Ağır yaralama", "next_order": 16 }
+                ]
+            },
+            {
+                "type": "terminal",
+                "order": 15,
+                "text": "Şikâyete bağlı suç — mağdur şikâyetçi ise soruşturma dosyası hazırlanır, değilse dosya kapatılır. Tutanakları düzenleyip savcılığa gönderin.",
+                "outcome": "refer_to_prosecutor"
+            },
+            {
+                "type": "terminal",
+                "order": 16,
+                "text": "Re'sen soruşturma — şüpheli gözaltına alınır, tutanaklar hazırlanır ve savcılığa sevk edilir.",
+                "outcome": "refer_to_prosecutor"
             }
         ],
         "prosecutor_info": {
@@ -292,67 +334,112 @@
     {
         "id": "uyusturucu",
         "category_id": "asayis",
-        "title": "Uyuşturucu Madde",
+        "title": "[TASLAK] Uyuşturucu Madde",
         "definition": "Uyuşturucu veya uyarıcı maddelerin imal, ithal, ihraç, satış, satışa arz, kullanma amacıyla bulundurma suçlarıdır. TCK 188-191. maddeleri kapsamında düzenlenmiştir. Kullanmak için bulundurma ile ticareti ayrı suç tipleridir.",
         "how_it_occurs": "• Sokakta satış/kullanım tespiti\n• İhbar üzerine operasyon\n• Araç/şahıs kontrolünde ele geçirme\n• Kargo/posta ile gönderim tespiti\n• Uyuşturucu imalathanesi baskını\n• Kontrol noktalarında tespit",
         "steps": [
             {
+                "type": "instruction",
                 "order": 1,
                 "text": "Olay yerine güvenli şekilde intikal edin",
                 "is_critical": true
             },
             {
+                "type": "instruction",
                 "order": 2,
                 "text": "Şüphelileri kontrol altına alın",
                 "is_critical": true
             },
             {
+                "type": "instruction",
                 "order": 3,
                 "text": "Cumhuriyet Savcısını arayarak bilgi verin",
                 "is_critical": true
             },
             {
+                "type": "instruction",
                 "order": 4,
                 "text": "Olay yerini koruma altına alın",
                 "is_critical": false
             },
             {
+                "type": "instruction",
                 "order": 5,
                 "text": "Üst araması yapın (arama tutanağı düzenleyin)",
                 "is_critical": true
             },
             {
+                "type": "instruction",
                 "order": 6,
                 "text": "Uyuşturucu maddeyi usulüne uygun muhafaza altına alın",
                 "is_critical": true
             },
             {
+                "type": "instruction",
                 "order": 7,
                 "text": "Maddeyi tartın ve fotoğraflayın",
                 "is_critical": false
             },
             {
+                "type": "question",
                 "order": 8,
-                "text": "El koyma tutanağı düzenleyin",
+                "text": "Ele geçirilen miktar kullanım miktarını aşıyor mu?",
+                "branches": [
+                    { "label": "Evet — Ticaret şüphesi", "next_order": 9 },
+                    { "label": "Hayır — Kullanım miktarı", "next_order": 12 }
+                ]
+            },
+            {
+                "type": "instruction",
+                "order": 9,
+                "text": "El koyma tutanağı düzenleyin — ticaret kapsamında",
+                "is_critical": true
+            },
+            {
+                "type": "instruction",
+                "order": 10,
+                "text": "Şüphelinin bağlantılarını araştırın, ek yakalama talimatı isteyin",
                 "is_critical": false
             },
             {
-                "order": 9,
+                "type": "terminal",
+                "order": 11,
+                "text": "Uyuşturucu ticareti — şüpheli gözaltına alınır, tutanaklar ve numune kriminal laboratuvara gönderilir, dosya savcılığa sevk edilir.",
+                "outcome": "refer_to_prosecutor"
+            },
+            {
+                "type": "instruction",
+                "order": 12,
+                "text": "El koyma tutanağı düzenleyin — kullanım kapsamında",
+                "is_critical": false
+            },
+            {
+                "type": "instruction",
+                "order": 13,
                 "text": "Şüphelinin kan/idrar tahlilini yaptırın",
                 "is_critical": false
             },
             {
-                "order": 10,
+                "type": "terminal",
+                "order": 14,
+                "text": "Kullanım amacıyla bulundurma — tedavi ve denetimli serbestlik kararı için savcılığa sevk edilir.",
+                "outcome": "refer_to_prosecutor"
+            },
+            {
+                "type": "instruction",
+                "order": 15,
                 "text": "İfade alın",
                 "is_critical": false
             },
             {
-                "order": 11,
+                "type": "instruction",
+                "order": 16,
                 "text": "Numune alarak kriminal laboratuvara gönderin",
                 "is_critical": false
             },
             {
-                "order": 12,
+                "type": "instruction",
+                "order": 17,
                 "text": "Tutanakları savcılığa teslim edin",
                 "is_critical": false
             }

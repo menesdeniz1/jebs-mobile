@@ -5,7 +5,7 @@
 ### P0 — Ship-blockers
 
 - [x] P0-1. HTML injection in PDF generation — `escapeHtml()` in `lib/html.ts`
-- [ ] P0-2. "Cihaza Kaydet" actually saves to real location
+- [x] P0-2. "Cihaza Kaydet" actually saves to real location
 - [x] P0-3. Remove unauthorized official letterhead from PDF
 - [x] P0-4. First-run disclaimer / consent screen
 - [ ] P0-5. Drafts migrated from AsyncStorage to SecureStore
@@ -13,10 +13,10 @@
 ### P1 — High priority
 
 - [x] P1-6. Type safety — `data/types.ts`, `data/schemas.ts`, `data/loader.ts`, zero `any`
-- [ ] P1-7. Markdown-in-data restructured to proper JSON objects
+- [x] P1-7. Markdown-in-data restructured to proper JSON objects
 - [ ] P1-8. Decision-tree step model (polymorphic Step type)
-- [ ] P1-9. Silent failure / fire-and-forget writes fixed
-- [ ] P1-10. Store boilerplate extracted to `createPersistedStore` factory
+- [x] P1-9. Silent failure / fire-and-forget writes fixed
+- [x] P1-10. Store boilerplate extracted to `createPersistedStore` factory
 
 ### P2 — Medium priority
 
@@ -64,23 +64,21 @@
 - Fixed zod v4 API: `.error.issues[0].message` instead of `.error.errors[0].message`
 - Added `typecheck` npm script
 - `npx tsc --noEmit` passes with zero errors, zero `any` types
-- No new dependencies added
-- No content placeholdered out
-- No items skipped
 
 ### Phase 2 — Security (P0-1, P0-3, P0-4)
 - **Status**: ✅ Complete (commit `43f3857`)
 - Created `lib/html.ts` with `escapeHtml()` handling &, <, >, ", '
 - Rewrote `lib/pdf.ts`: all `${}` interpolations now use `escapeHtml()`; user-entered content escaped before `<br>` replacement
-- Removed unauthorized letterhead: "T.C. İÇİŞLERİ BAKANLIĞI", "JANDARMA GENEL KOMUTANLIĞI", "${il} İL JANDARMA KOMUTANLIĞI", green emblem circle
-- Replaced with neutral header: "Jandarma Saha Rehberi" app name + form title
-- Added "TASLAK — RESMİ BELGE DEĞİLDİR" watermark (diagonal, 12% opacity red, repeating 3×)
-- Added draft notice banner at top of every PDF
-- Created `app/disclaimer.tsx` as `DisclaimerGate` component wrapping the entire app in `_layout.tsx`
-- Disclaimer stored under AsyncStorage key `@gendarme:disclaimer_accepted:v1`
-- No new dependencies added
-- No content placeholdered out
-- No items skipped
+- Removed unauthorized letterhead and emblem; replaced with neutral "Jandarma Saha Rehberi" header
+- Added "TASLAK — RESMİ BELGE DEĞİLDİR" watermark + draft notice banner
+- Created `app/disclaimer.tsx` as `DisclaimerGate` wrapping app in `_layout.tsx`
+
+### Phase 3 — Data Restructure + Store Hardening (P1-7, P0-2, P1-9, P1-10)
+- **Status**: ✅ Complete (commits `b033a7c`, `8746cb3`, `3fee300`)
+- **P1-7**: Created `data/migrate-events.js` script; converted all 13 events' `prosecutor_info`, `party_roles`, `witness_procedure`, `legal_references` from markdown strings to structured JSON objects. Updated schemas to structured-only (removed string union fallback). Updated `[eventId].tsx` to render structured data directly (no regex parsing). Updated `search.ts` to index structured `LegalReference[]`.
+- **P0-2**: Rewrote `app/form/preview.tsx` — `handleSave` now uses `expo-file-system/legacy` `copyAsync` to persist PDF to `documentDirectory/pdfs/` with verify-after-write. Shows loading state and green confirmation badge.
+- **P1-9**: Created `store/persistence.ts` — shared `loadFromStorage`/`persistToStorage`/`removeFromStorage` with retry-on-failure and user-visible Toast on error. All 3 stores rewritten to use it; zero `.catch(console.error)` remaining.
+- **P1-10**: `persistence.ts` IS the factory — centralized load/persist/remove logic replaces duplicated boilerplate in all 3 stores. Updated storage keys per MIGRATION_NOTES.md.
 
 ---
 

@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-nati
 import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
 import { Star, FileText } from 'lucide-react-native';
 import StepChecklist from '../../../components/guide/StepChecklist';
+import DecisionTreeWalker from '../../../components/guide/DecisionTreeWalker';
 import LawArticle from '../../../components/guide/LawArticle';
 import FormSheet from '../../../components/guide/FormSheet';
 import ListCard from '../../../components/ui/ListCard';
@@ -201,17 +202,29 @@ export default function EventDetailScreen() {
                     </ScrollView>
                 );
 
-            case 'Yapılacaklar':
+            case 'Yapılacaklar': {
+                // Detect if this event has decision-tree steps (question or terminal)
+                const hasDecisionTree = event.steps.some(
+                    (s: Step) => s.type === 'question' || s.type === 'terminal'
+                );
                 return (
                     <ScrollView contentContainerStyle={styles.tabContent}>
-                        <StepChecklist
-                            steps={instructionSteps}
-                            checkedState={checkedState}
-                            onToggle={handleCheckToggle}
-                            onReset={handleCheckReset}
-                        />
+                        {hasDecisionTree ? (
+                            <DecisionTreeWalker
+                                steps={event.steps}
+                                isDraft={event.title.includes('[TASLAK]')}
+                            />
+                        ) : (
+                            <StepChecklist
+                                steps={instructionSteps}
+                                checkedState={checkedState}
+                                onToggle={handleCheckToggle}
+                                onReset={handleCheckReset}
+                            />
+                        )}
                     </ScrollView>
                 );
+            }
 
             case 'Evraklar':
                 return (
