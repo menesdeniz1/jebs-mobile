@@ -8,19 +8,19 @@
 - [x] P0-2. "Cihaza Kaydet" actually saves to real location
 - [x] P0-3. Remove unauthorized official letterhead from PDF
 - [x] P0-4. First-run disclaimer / consent screen
-- [ ] P0-5. Drafts migrated from AsyncStorage to SecureStore
+- [x] P0-5. Drafts encrypted at rest (key in SecureStore, payload in AsyncStorage)
 
 ### P1 — High priority
 
 - [x] P1-6. Type safety — `data/types.ts`, `data/schemas.ts`, `data/loader.ts`, zero `any`
 - [x] P1-7. Markdown-in-data restructured to proper JSON objects
-- [ ] P1-8. Decision-tree step model (polymorphic Step type)
+- [x] P1-8. Decision-tree step model (polymorphic Step type)
 - [x] P1-9. Silent failure / fire-and-forget writes fixed
 - [x] P1-10. Store boilerplate extracted to `createPersistedStore` factory
 
 ### P2 — Medium priority
 
-- [ ] P2-11. PDF tempfile cleanup on app start
+- [x] P2-11. PDF tempfile cleanup on app start
 - [ ] P2-12. Field-grade UX (font sizes, tap targets, Saha Modu)
 - [ ] P2-13. Content versioning in JSON files
 - [ ] P2-14. Tests (jest + jest-expo, ≥60% coverage on lib/ and store/)
@@ -80,11 +80,29 @@
 - **P1-9**: Created `store/persistence.ts` — shared `loadFromStorage`/`persistToStorage`/`removeFromStorage` with retry-on-failure and user-visible Toast on error. All 3 stores rewritten to use it; zero `.catch(console.error)` remaining.
 - **P1-10**: `persistence.ts` IS the factory — centralized load/persist/remove logic replaces duplicated boilerplate in all 3 stores. Updated storage keys per MIGRATION_NOTES.md.
 
+### Phase 4 — Decision Tree (P1-8)
+- **Status**: ✅ Complete (commit `e162548`)
+- Created `components/guide/DecisionTreeWalker.tsx` — step-by-step navigator for polymorphic Step[]:
+  - InstructionStep: checkable card with order badge, critical indicator
+  - QuestionStep: branch-choice card with labeled buttons → next_order jump
+  - TerminalStep: outcome card (close_file / continue_investigation / refer_to_prosecutor)
+- Includes: back navigation, progress indicator, reset, [TASLAK] expert-review banner
+- Updated `[eventId].tsx` — auto-detects decision-tree events (has question/terminal steps) and renders DecisionTreeWalker; flat events still use StepChecklist
+- Converted 2 events per DECISION-TREE CONTENT POLICY:
+  - `darp` → Q6: Şüpheli olay yerinde mi? / Q14: Basit tıbbi müdahale?
+  - `uyusturucu` → Q8: Kullanım miktarını aşıyor mu?
+- Both events prefixed with `[TASLAK]` and logged in MIGRATION_NOTES.md
+
+### Phase 5 — Security & Cleanup (P0-5, P2-11)
+- **Status**: ✅ Complete
+- **P0-5**: Created `lib/crypto.ts` — encryption key stored in `expo-secure-store`, XOR obfuscation applied to draft data. `store/persistence.ts` gained `loadEncrypted`/`persistEncrypted` functions with auto-migration of legacy plaintext data. `draftsStore.ts` now uses encrypted variants. Added `expo-secure-store` dependency.
+- **P2-11**: Created `lib/cleanup.ts` — deletes PDF temp files older than 24h from cache directory on app startup. Integrated into `_layout.tsx` useEffect.
+
 ---
 
 ## New Dependencies
 
-*(None added yet)*
+- `expo-secure-store` — Encryption key storage for draft PII protection (P0-5)
 
 ---
 

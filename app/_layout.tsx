@@ -13,6 +13,7 @@ import { useFavoritesStore } from '../store/favoritesStore';
 import { useDraftsStore } from '../store/draftsStore';
 import { useSearchStore } from '../store/searchStore';
 import { useTheme } from '../constants/theme';
+import { cleanupPDFTempFiles } from '../lib/cleanup';
 import DisclaimerGate from './disclaimer';
 
 export default function RootLayout() {
@@ -31,6 +32,7 @@ export default function RootLayout() {
         loadFavorites();
         loadDrafts();
         loadSearch();
+        cleanupPDFTempFiles();
     }, []);
 
     if (!fontsLoaded) {

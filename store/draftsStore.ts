@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { loadFromStorage, persistToStorage } from './persistence';
+import { loadEncrypted, persistEncrypted } from './persistence';
 
 export interface Draft {
     id: string;
@@ -27,7 +27,7 @@ export const useDraftsStore = create<DraftsState>((set, get) => ({
     loaded: false,
 
     load: async () => {
-        const drafts = await loadFromStorage<Draft[]>(STORAGE_KEY, []);
+        const drafts = await loadEncrypted<Draft[]>(STORAGE_KEY, []);
         set({ drafts, loaded: true });
     },
 
@@ -36,13 +36,13 @@ export const useDraftsStore = create<DraftsState>((set, get) => ({
         const filtered = state.drafts.filter((d) => d.id !== draft.id);
         const next = [draft, ...filtered];
         set({ drafts: next });
-        persistToStorage(STORAGE_KEY, next);
+        persistEncrypted(STORAGE_KEY, next);
     },
 
     remove: (id) => {
         const next = get().drafts.filter((d) => d.id !== id);
         set({ drafts: next });
-        persistToStorage(STORAGE_KEY, next);
+        persistEncrypted(STORAGE_KEY, next);
     },
 
     getByTemplate: (templateId) => {
