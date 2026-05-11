@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { useRouter } from 'expo-router';
-import { FolderOpen, FileText, Clock } from 'lucide-react-native';
+import { FolderOpen, FileText, Clock, Sun, Moon } from 'lucide-react-native';
 import ListCard from '../../components/ui/ListCard';
 import SectionHeader from '../../components/ui/SectionHeader';
-import { useTheme, Spacing } from '../../constants/theme';
+import { useTheme, Spacing, FontFamily, FontSize, BorderRadius, MinTapTarget, useFieldModeStore } from '../../constants/theme';
 import { useDraftsStore } from '../../store/draftsStore';
 import { getCategories, getForms } from '../../data/loader';
 import type { Category, FormTemplate } from '../../data/types';
@@ -32,11 +32,59 @@ export default function HomeScreen() {
         [drafts]
     );
 
+    const isFieldMode = useFieldModeStore((s) => s.isFieldMode);
+    const toggleFieldMode = useFieldModeStore((s) => s.toggle);
+
     return (
         <ScrollView
             style={[styles.container, { backgroundColor: colors.background }]}
             contentContainerStyle={styles.content}
         >
+            {/* Saha Modu Toggle */}
+            <TouchableOpacity
+                style={[
+                    styles.fieldModeCard,
+                    {
+                        backgroundColor: isFieldMode ? '#FFF3E0' : colors.surface,
+                        borderColor: isFieldMode ? '#E65100' : colors.border,
+                    },
+                ]}
+                onPress={toggleFieldMode}
+                activeOpacity={0.7}
+            >
+                {isFieldMode ? (
+                    <Sun size={22} color="#E65100" />
+                ) : (
+                    <Moon size={22} color={colors.textSecondary} />
+                )}
+                <View style={styles.fieldModeText}>
+                    <Text
+                        style={[
+                            styles.fieldModeTitle,
+                            {
+                                color: isFieldMode ? '#E65100' : colors.textPrimary,
+                                fontFamily: FontFamily.bold,
+                            },
+                        ]}
+                    >
+                        {isFieldMode ? '🔶 Saha Modu AKTİF' : 'Saha Modu'}
+                    </Text>
+                    <Text
+                        style={[
+                            styles.fieldModeSubtitle,
+                            {
+                                color: isFieldMode ? '#BF360C' : colors.textSecondary,
+                                fontFamily: FontFamily.regular,
+                            },
+                        ]}
+                    >
+                        {isFieldMode
+                            ? 'Büyük yazı tipi aktif — dokunarak kapatın'
+                            : 'Daha büyük yazı tipi için dokunun'}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+
             {/* Olay Rehberi */}
             <SectionHeader emoji="📋" title="Olay Rehberi" />
             {categories.map((cat: Category) => (
@@ -100,5 +148,25 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: Spacing.lg,
+    },
+    fieldModeCard: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: Spacing.lg,
+        borderRadius: BorderRadius.md,
+        borderWidth: 1.5,
+        marginBottom: Spacing.lg,
+        minHeight: MinTapTarget,
+        gap: Spacing.md,
+    },
+    fieldModeText: {
+        flex: 1,
+    },
+    fieldModeTitle: {
+        fontSize: FontSize.subheading,
+    },
+    fieldModeSubtitle: {
+        fontSize: FontSize.small,
+        marginTop: 2,
     },
 });

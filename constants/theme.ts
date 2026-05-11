@@ -1,4 +1,7 @@
 import { useColorScheme } from 'react-native';
+import { create } from 'zustand';
+
+// ── Colors ────────────────────────────────────────────
 
 export const LightColors = {
     primary: '#1B5E20',
@@ -34,6 +37,8 @@ export const DarkColors: typeof LightColors = {
     cardShadow: 'rgba(0,0,0,0.3)',
 };
 
+// ── Spacing ────────────────────────────────────────────
+
 export const Spacing = {
     xs: 4,
     sm: 8,
@@ -44,6 +49,8 @@ export const Spacing = {
     xxxl: 32,
 };
 
+// ── Border Radius ──────────────────────────────────────
+
 export const BorderRadius = {
     sm: 6,
     md: 10,
@@ -52,14 +59,29 @@ export const BorderRadius = {
     full: 999,
 };
 
+// ── Font Sizes ─────────────────────────────────────────
+// Increased from original (11/13/14/18) for field readability
+
 export const FontSize = {
-    small: 11,
-    body: 13,
-    subheading: 14,
-    heading: 18,
-    xl: 20,
-    xxl: 24,
+    small: 13,
+    body: 15,
+    subheading: 16,
+    heading: 20,
+    xl: 22,
+    xxl: 26,
 };
+
+/** Field-mode font sizes — larger for outdoor/glove use */
+export const FieldFontSize: typeof FontSize = {
+    small: 15,
+    body: 18,
+    subheading: 20,
+    heading: 24,
+    xl: 26,
+    xxl: 30,
+};
+
+// ── Font Family ────────────────────────────────────────
 
 export const FontFamily = {
     regular: 'NotoSans-Regular',
@@ -67,9 +89,36 @@ export const FontFamily = {
     bold: 'NotoSans-Bold',
 };
 
+// ── Minimum tap target (Android: 48dp, Apple: 44pt) ───
+
+export const MinTapTarget = 48;
+
+// ── Field Mode Store ───────────────────────────────────
+
+interface FieldModeState {
+    isFieldMode: boolean;
+    toggle: () => void;
+}
+
+export const useFieldModeStore = create<FieldModeState>((set) => ({
+    isFieldMode: false,
+    toggle: () => set((s) => ({ isFieldMode: !s.isFieldMode })),
+}));
+
+// ── Theme Hook ─────────────────────────────────────────
+
 export function useTheme() {
     const colorScheme = useColorScheme();
     const isDark = colorScheme === 'dark';
     const colors = isDark ? DarkColors : LightColors;
     return { colors, isDark };
+}
+
+/**
+ * Hook that returns current font sizes (field-mode aware).
+ * Components should prefer this over importing FontSize directly.
+ */
+export function useFontSize(): typeof FontSize {
+    const isFieldMode = useFieldModeStore((s) => s.isFieldMode);
+    return isFieldMode ? FieldFontSize : FontSize;
 }

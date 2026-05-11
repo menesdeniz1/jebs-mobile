@@ -21,8 +21,8 @@
 ### P2 — Medium priority
 
 - [x] P2-11. PDF tempfile cleanup on app start
-- [ ] P2-12. Field-grade UX (font sizes, tap targets, Saha Modu)
-- [ ] P2-13. Content versioning in JSON files
+- [x] P2-12. Field-grade UX (font sizes, tap targets, Saha Modu)
+- [x] P2-13. Content versioning in JSON files
 - [ ] P2-14. Tests (jest + jest-expo, ≥60% coverage on lib/ and store/)
 - [ ] P2-15. Crash reporting (Sentry, OFF by default)
 

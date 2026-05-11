@@ -1,0 +1,26 @@
+{
+    "schema_version": "1.0.0",
+    "data_version": "2.0.0",
+    "last_updated": "2026-05-11",
+    "files": {
+        "categories.json": {
+            "version": "1.0.0",
+            "item_count": 4,
+            "checksum_note": "Manual verification required"
+        },
+        "events.json": {
+            "version": "2.0.0",
+            "item_count": 13,
+            "changes": [
+                "1.0.0 → 1.1.0: Added structured prosecutor_info, party_roles, witness_procedure, legal_references (P1-7)",
+                "1.1.0 → 2.0.0: Added decision-tree steps for darp and uyusturucu events (P1-8)"
+            ]
+        },
+        "forms.json": {
+            "version": "1.0.0",
+            "item_count": 13,
+            "changes": []
+        }
+    },
+    "migration_notes": "See MIGRATION_NOTES.md for full migration history"
+}
