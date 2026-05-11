@@ -13,6 +13,7 @@ import { useFavoritesStore } from '../store/favoritesStore';
 import { useDraftsStore } from '../store/draftsStore';
 import { useSearchStore } from '../store/searchStore';
 import { useTheme } from '../constants/theme';
+import DisclaimerGate from './disclaimer';
 
 export default function RootLayout() {
     const { colors, isDark } = useTheme();
@@ -37,7 +38,7 @@ export default function RootLayout() {
     }
 
     return (
-        <>
+        <DisclaimerGate>
             <StatusBar style={isDark ? 'light' : 'light'} backgroundColor={colors.primary} />
             <Stack
                 screenOptions={{
@@ -67,6 +68,6 @@ export default function RootLayout() {
                 />
             </Stack>
             <Toast config={toastConfig} />
-        </>
+        </DisclaimerGate>
     );
 }

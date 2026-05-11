@@ -1,5 +1,6 @@
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
+import { escapeHtml } from './html';
 
 export interface PDFData {
   title: string;
@@ -15,11 +16,15 @@ export interface PDFData {
 }
 
 function generatePDFHTML(data: PDFData): string {
-  const il = data.il || '........';
-  const ilce = data.ilce || '........';
-  const mahalle = data.mahalleKoy || '........';
-  const tarih = data.tarih || '../../....';
-  const saat = data.saat || '..:..';
+  const il = escapeHtml(data.il) || '........';
+  const ilce = escapeHtml(data.ilce) || '........';
+  const mahalle = escapeHtml(data.mahalleKoy || '') || '........';
+  const tarih = escapeHtml(data.tarih) || '../../....';
+  const saat = escapeHtml(data.saat) || '..:..';
+  const title = escapeHtml(data.title);
+  const rutbe = escapeHtml(data.duzenleyenRutbe || '');
+  const adsoyad = escapeHtml(data.duzenleyenAdsoyad || '');
+  const sicil = escapeHtml(data.duzenleyenSicil || '');
 
   return `
 <!DOCTYPE html>
@@ -29,11 +34,40 @@ function generatePDFHTML(data: PDFData): string {
   <style>
     @page { size: A4; margin: 2.5cm; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.6; color: #000; }
-    .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1B5E20; padding-bottom: 15px; }
-    .emblem { width: 60px; height: 60px; margin: 0 auto 10px; background: #1B5E20; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24pt; font-weight: bold; line-height: 60px; }
-    .header h1 { font-size: 11pt; font-weight: bold; margin: 3px 0; text-transform: uppercase; }
-    .header h2 { font-size: 14pt; font-weight: bold; margin: 15px 0 5px; text-decoration: underline; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.6; color: #000; position: relative; }
+    .watermark {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .watermark-text {
+      font-size: 48pt;
+      font-weight: bold;
+      color: rgba(200, 0, 0, 0.12);
+      transform: rotate(-35deg);
+      white-space: nowrap;
+      letter-spacing: 8px;
+      text-align: center;
+      line-height: 2.5;
+    }
+    .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #555; padding-bottom: 15px; }
+    .header h1 { font-size: 14pt; font-weight: bold; margin: 3px 0; }
+    .header h2 { font-size: 12pt; color: #666; margin: 5px 0 0; font-style: italic; }
+    .draft-notice {
+      text-align: center;
+      padding: 8px 16px;
+      margin-bottom: 20px;
+      border: 2px solid #C62828;
+      border-radius: 4px;
+      background: #FFF3F3;
+      color: #C62828;
+      font-weight: bold;
+      font-size: 10pt;
+    }
     .location-sentence { margin-bottom: 20px; text-indent: 2em; text-align: justify; }
     .content { margin-bottom: 30px; }
     .content table { width: 100%; border-collapse: collapse; margin: 10px 0; }
@@ -47,13 +81,21 @@ function generatePDFHTML(data: PDFData): string {
   </style>
 </head>
 <body>
+  <!-- Watermark: TASLAK — RESMİ BELGE DEĞİLDİR -->
+  <div class="watermark">
+    <div class="watermark-text">
+      TASLAK — RESMİ BELGE DEĞİLDİR<br>
+      TASLAK — RESMİ BELGE DEĞİLDİR<br>
+      TASLAK — RESMİ BELGE DEĞİLDİR
+    </div>
+  </div>
+
   <div class="header">
-    <div class="emblem">J</div>
-    <h1>T.C. İÇİŞLERİ BAKANLIĞI</h1>
-    <h1>JANDARMA GENEL KOMUTANLIĞI</h1>
-    <h1>${il.toUpperCase()} İL JANDARMA KOMUTANLIĞI</h1>
-    <h1>${ilce.toUpperCase()} İLÇE JANDARMA KOMUTANLIĞI</h1>
-    <h2>${data.title}</h2>
+    <h1>Jandarma Saha Rehberi</h1>
+    <h2>${title}</h2>
+  </div>
+  <div class="draft-notice">
+    ⚠ TASLAK BELGE — RESMİ BELGE NİTELİĞİ TAŞIMAZ
   </div>
   <p class="location-sentence">
     ${il} İli ${ilce} İlçesi ${mahalle} Köyü/Mahallesi'nde,
@@ -69,8 +111,8 @@ function generatePDFHTML(data: PDFData): string {
     <div class="signature-block">
       <div class="signature-line">
         <strong>Düzenleyen</strong><br>
-        ${data.duzenleyenRutbe || ''} ${data.duzenleyenAdsoyad || ''}<br>
-        Sicil: ${data.duzenleyenSicil || ''}
+        ${rutbe} ${adsoyad}<br>
+        Sicil: ${sicil}
       </div>
     </div>
     <div class="signature-block">
@@ -116,10 +158,12 @@ export function buildFormContentHTML(
 
   let html = '';
   for (const [groupKey, items] of Object.entries(groups)) {
-    const groupTitle = groupLabels[groupKey] || groupKey;
+    const groupTitle = escapeHtml(groupLabels[groupKey] || groupKey);
     html += `<div class="section-title">${groupTitle}</div><table>`;
     for (const item of items) {
-      html += `<tr><td>${item.label}</td><td>${item.value.replace(/\n/g, '<br>')}</td></tr>`;
+      const label = escapeHtml(item.label);
+      const value = escapeHtml(item.value).replace(/\n/g, '<br>');
+      html += `<tr><td>${label}</td><td>${value}</td></tr>`;
     }
     html += '</table>';
   }
