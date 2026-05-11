@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { View, ScrollView, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Text, Linking, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
-import { FolderOpen, FileText, Clock, Sun, Moon } from 'lucide-react-native';
+import { FolderOpen, FileText, Clock, Sun, Moon, Phone } from 'lucide-react-native';
 import ListCard from '../../components/ui/ListCard';
 import SectionHeader from '../../components/ui/SectionHeader';
 import { useTheme, Spacing, FontFamily, FontSize, BorderRadius, MinTapTarget, useFieldModeStore } from '../../constants/theme';
@@ -137,6 +137,33 @@ export default function HomeScreen() {
                 </>
             )}
 
+            {/* Acil Numaralar (P3-19) */}
+            <SectionHeader emoji="🚨" title="Acil Numaralar" />
+            <View style={styles.emergencyRow}>
+                {[
+                    { number: '112', label: 'Acil', color: '#D32F2F' },
+                    { number: '155', label: 'Polis', color: '#1565C0' },
+                    { number: '156', label: 'Jandarma', color: '#1B5E20' },
+                ].map((item) => (
+                    <TouchableOpacity
+                        key={item.number}
+                        style={[styles.emergencyButton, { backgroundColor: item.color }]}
+                        onPress={() =>
+                            Linking.openURL(`tel:${item.number}`).catch(() => {})
+                        }
+                        activeOpacity={0.7}
+                    >
+                        <Phone size={18} color="#FFFFFF" />
+                        <Text style={[styles.emergencyNumber, { fontFamily: FontFamily.bold }]}>
+                            {item.number}
+                        </Text>
+                        <Text style={[styles.emergencyLabel, { fontFamily: FontFamily.regular }]}>
+                            {item.label}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+
             <View style={{ height: 30 }} />
         </ScrollView>
     );
@@ -168,5 +195,26 @@ const styles = StyleSheet.create({
     fieldModeSubtitle: {
         fontSize: FontSize.small,
         marginTop: 2,
+    },
+    emergencyRow: {
+        flexDirection: 'row',
+        gap: Spacing.sm,
+        marginBottom: Spacing.lg,
+    },
+    emergencyButton: {
+        flex: 1,
+        alignItems: 'center',
+        paddingVertical: Spacing.lg,
+        borderRadius: BorderRadius.md,
+        minHeight: MinTapTarget,
+        gap: Spacing.xs,
+    },
+    emergencyNumber: {
+        color: '#FFFFFF',
+        fontSize: FontSize.heading,
+    },
+    emergencyLabel: {
+        color: 'rgba(255,255,255,0.85)',
+        fontSize: FontSize.small,
     },
 });

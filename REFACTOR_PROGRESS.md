@@ -29,9 +29,9 @@
 ### P3 — Quality of life
 
 - [ ] P3-16. Officer profile (auto-fill officer fields)
-- [ ] P3-17. Date/time defaults (current local date/time)
+- [x] P3-17. Date/time defaults (current local date/time)
 - [ ] P3-18. Real official template layouts (per-form PDF templates)
-- [ ] P3-19. Emergency contacts (112, 155, 156, AMATEM)
+- [x] P3-19. Emergency contacts (112, 155, 156, AMATEM)
 - [ ] P3-20. i18n scaffold (centralized Turkish strings)
 
 ---

@@ -33,11 +33,28 @@ export default function FormFillingScreen() {
     const [showSaveDialog, setShowSaveDialog] = useState(false);
     const [pendingBack, setPendingBack] = useState(false);
 
-    // Load draft if draftId provided
+    // Load draft if draftId provided, otherwise auto-fill date/time fields (P3-17)
     useEffect(() => {
         if (draftId) {
             const draft = drafts.find((d) => d.id === draftId);
             if (draft) setValues(draft.values);
+        } else if (template) {
+            // Auto-fill date and time fields with current values
+            const now = new Date();
+            const defaults: Record<string, string> = {};
+            for (const field of template.fields) {
+                if (field.type === 'date') {
+                    defaults[field.id] = now.toLocaleDateString('tr-TR');
+                } else if (field.type === 'time') {
+                    defaults[field.id] = now.toLocaleTimeString('tr-TR', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    });
+                }
+            }
+            if (Object.keys(defaults).length > 0) {
+                setValues((prev) => ({ ...defaults, ...prev }));
+            }
         }
     }, [draftId]);
 
