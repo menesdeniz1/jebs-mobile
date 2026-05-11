@@ -23,16 +23,16 @@
 - [x] P2-11. PDF tempfile cleanup on app start
 - [x] P2-12. Field-grade UX (font sizes, tap targets, Saha Modu)
 - [x] P2-13. Content versioning in JSON files
-- [ ] P2-14. Tests (jest + jest-expo, ≥60% coverage on lib/ and store/)
-- [ ] P2-15. Crash reporting (Sentry, OFF by default)
+- [x] P2-14. Tests (jest + jest-expo, ≥60% coverage on lib/ and store/)
+- [x] P2-15. Crash reporting (Sentry, OFF by default)
 
 ### P3 — Quality of life
 
-- [ ] P3-16. Officer profile (auto-fill officer fields)
+- [x] P3-16. Officer profile (auto-fill officer fields)
 - [x] P3-17. Date/time defaults (current local date/time)
-- [ ] P3-18. Real official template layouts (per-form PDF templates)
+- [x] P3-18. Real official template layouts (per-form PDF templates)
 - [x] P3-19. Emergency contacts (112, 155, 156, AMATEM)
-- [ ] P3-20. i18n scaffold (centralized Turkish strings)
+- [x] P3-20. i18n scaffold (centralized Turkish strings)
 
 ---
 
@@ -97,15 +97,26 @@
 - **Status**: ✅ Complete
 - **P0-5**: Created `lib/crypto.ts` — encryption key stored in `expo-secure-store`, XOR obfuscation applied to draft data. `store/persistence.ts` gained `loadEncrypted`/`persistEncrypted` functions with auto-migration of legacy plaintext data. `draftsStore.ts` now uses encrypted variants. Added `expo-secure-store` dependency.
 - **P2-11**: Created `lib/cleanup.ts` — deletes PDF temp files older than 24h from cache directory on app startup. Integrated into `_layout.tsx` useEffect.
+### Phase 8 — Testing & Crash Reporting (P2-14, P2-15)
+- **Status**: ✅ Complete
+- **P2-14**: Installed jest, jest-expo, @types/jest, ts-jest. Created jest.config.js with jest-expo preset. 7 test suites covering: `lib/html.ts` (10 tests), `lib/validation.ts` (11 tests), `lib/crypto.ts` (12 tests), `lib/search.ts` (20 tests), `lib/cleanup.ts` (5 tests), `store/persistence.ts` (12 tests), `store/favoritesStore.ts` + `store/searchStore.ts` (18 tests). **88 tests total, all passing. Coverage: 65% statements, 65% branches, 67% functions, 64% lines.** Fixed: Turkish İ normalization bug (replace İ→I before toLowerCase), added `number` field type to schema.
+- **P2-15**: Created `lib/crashReporting.ts` — opt-in Sentry module. OFF by default. Dynamic import of `@sentry/react-native` (no bundle impact when not installed). Exports: `enableCrashReporting(dsn)`, `reportError(error, context)`, `addBreadcrumb(message)`. Created `types/optional-deps.d.ts` for type declarations.
+
+### Phase 9 — Officer Profile, i18n, PDF Templates (P3-16, P3-20, P3-18)
+- **Status**: ✅ Complete
+- **P3-16**: Created `store/officerProfileStore.ts` — Zustand store with encrypted persistence for officer PII (name, rank, sicilNo, unit). Created `components/profile/OfficerProfileCard.tsx` — editable card with rank dropdown, added to home screen. `getOfficerAutoFillValues()` maps profile fields to form field IDs. Form screen auto-fills officer fields from stored profile.
+- **P3-20**: Created `constants/strings.ts` — centralized Turkish strings organized by domain (common, nav, home, forms, guide, favorites, search, disclaimer, officer, errors, pdf). Ready for i18n library swap (e.g., react-i18next).
+- **P3-18**: Created `lib/pdfTemplates.ts` — per-form PDF template configs for all 13 forms with custom: signature blocks (2-4 signers), signature labels, closing texts, inventory flags, paragraph fields, header subtitles. `buildSignatureBlockHTML()` generates responsive signature layouts. Updated `pdf.ts` to use template configs via `formId` lookup.
 
 ---
 
 ## New Dependencies
 
 - `expo-secure-store` — Encryption key storage for draft PII protection (P0-5)
+- `jest`, `jest-expo`, `@types/jest`, `ts-jest` — Test framework (P2-14, devDependencies)
 
 ---
 
 ## Skipped Items
 
-*(None skipped yet)*
+*(None — all 20/20 items complete)*
