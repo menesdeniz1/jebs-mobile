@@ -1,9 +1,11 @@
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import { escapeHtml } from './html';
+import { getTemplateConfig, buildSignatureBlockHTML } from './pdfTemplates';
 
 export interface PDFData {
   title: string;
+  formId?: string; // P3-18: per-form template lookup
   il: string;
   ilce: string;
   mahalleKoy?: string;
@@ -25,6 +27,13 @@ function generatePDFHTML(data: PDFData): string {
   const rutbe = escapeHtml(data.duzenleyenRutbe || '');
   const adsoyad = escapeHtml(data.duzenleyenAdsoyad || '');
   const sicil = escapeHtml(data.duzenleyenSicil || '');
+
+  const config = data.formId ? getTemplateConfig(data.formId) : getTemplateConfig('');
+  const closingText = config.closingText
+    ? escapeHtml(config.closingText)
+    : `İş bu tutanak ${tarih} tarihinde tarafımızca tanzim ve imza edilmiştir.`;
+  const signatureHTML = buildSignatureBlockHTML(config, data.duzenleyenAdsoyad, data.duzenleyenRutbe, data.duzenleyenSicil);
+  const subtitle = config.headerSubtitle ? `<h2>${escapeHtml(config.headerSubtitle)}</h2>` : '';
 
   return `
 <!DOCTYPE html>
@@ -75,8 +84,8 @@ function generatePDFHTML(data: PDFData): string {
     .content table td:first-child { width: 35%; font-weight: bold; background: #f5f5f5; }
     .section-title { font-weight: bold; font-size: 12pt; margin: 15px 0 8px; border-bottom: 1px solid #999; padding-bottom: 3px; }
     .closing { margin-top: 30px; text-indent: 2em; text-align: justify; }
-    .footer { margin-top: 50px; display: flex; justify-content: space-between; }
-    .footer .signature-block { text-align: center; width: 45%; }
+    .footer { margin-top: 50px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .footer .signature-block { text-align: center; }
     .footer .signature-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 5px; font-size: 11pt; }
   </style>
 </head>
@@ -93,6 +102,7 @@ function generatePDFHTML(data: PDFData): string {
   <div class="header">
     <h1>Jandarma Saha Rehberi</h1>
     <h2>${title}</h2>
+    ${subtitle}
   </div>
   <div class="draft-notice">
     ⚠ TASLAK BELGE — RESMİ BELGE NİTELİĞİ TAŞIMAZ
@@ -105,23 +115,9 @@ function generatePDFHTML(data: PDFData): string {
     ${data.content}
   </div>
   <p class="closing">
-    İş bu tutanak ${tarih} tarihinde tarafımızca tanzim ve imza edilmiştir.
+    ${closingText}
   </p>
-  <div class="footer">
-    <div class="signature-block">
-      <div class="signature-line">
-        <strong>Düzenleyen</strong><br>
-        ${rutbe} ${adsoyad}<br>
-        Sicil: ${sicil}
-      </div>
-    </div>
-    <div class="signature-block">
-      <div class="signature-line">
-        <strong>İmza</strong><br>
-        ___________________
-      </div>
-    </div>
-  </div>
+  ${signatureHTML}
 </body>
 </html>`;
 }

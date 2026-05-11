@@ -8,6 +8,7 @@ import { useTheme, Spacing, FontFamily, FontSize, BorderRadius, MinTapTarget, us
 import { useDraftsStore } from '../../store/draftsStore';
 import { getCategories, getForms } from '../../data/loader';
 import type { Category, FormTemplate } from '../../data/types';
+import OfficerProfileCard from '../../components/profile/OfficerProfileCard';
 
 const categoryColors: Record<string, string> = {
     asayis: '#1565C0',
@@ -84,6 +85,9 @@ export default function HomeScreen() {
                     </Text>
                 </View>
             </TouchableOpacity>
+
+            {/* Personel Profili (P3-16) */}
+            <OfficerProfileCard />
 
             {/* Olay Rehberi */}
             <SectionHeader emoji="📋" title="Olay Rehberi" />

@@ -13,6 +13,7 @@ import { validateForm } from '../../lib/validation';
 import { generatePDF, buildFormContentHTML, PDFData } from '../../lib/pdf';
 import { getFormById } from '../../data/loader';
 import type { FormTemplate, FormField as FormFieldType } from '../../data/types';
+import { useOfficerProfileStore, getOfficerAutoFillValues } from '../../store/officerProfileStore';
 
 export default function FormFillingScreen() {
     const { colors } = useTheme();
@@ -33,13 +34,14 @@ export default function FormFillingScreen() {
     const [showSaveDialog, setShowSaveDialog] = useState(false);
     const [pendingBack, setPendingBack] = useState(false);
 
-    // Load draft if draftId provided, otherwise auto-fill date/time fields (P3-17)
+    // Load draft if draftId provided, otherwise auto-fill date/time + officer fields
+    const officerProfile = useOfficerProfileStore((s) => s.profile);
     useEffect(() => {
         if (draftId) {
             const draft = drafts.find((d) => d.id === draftId);
             if (draft) setValues(draft.values);
         } else if (template) {
-            // Auto-fill date and time fields with current values
+            // Auto-fill date/time fields (P3-17) + officer fields (P3-16)
             const now = new Date();
             const defaults: Record<string, string> = {};
             for (const field of template.fields) {
@@ -50,6 +52,15 @@ export default function FormFillingScreen() {
                         hour: '2-digit',
                         minute: '2-digit',
                     });
+                }
+            }
+            // Merge officer profile auto-fill values
+            const officerValues = getOfficerAutoFillValues(officerProfile);
+            // Only fill officer fields that exist in this form's field list
+            const fieldIds = new Set(template.fields.map((f) => f.id));
+            for (const [key, val] of Object.entries(officerValues)) {
+                if (fieldIds.has(key)) {
+                    defaults[key] = val;
                 }
             }
             if (Object.keys(defaults).length > 0) {
@@ -118,14 +129,15 @@ export default function FormFillingScreen() {
             const html = buildFormContentHTML(template.fields, values);
             const pdfData: PDFData = {
                 title: template.title,
+                formId: templateId, // P3-18: per-form PDF template
                 il: values.il || '',
                 ilce: values.ilce || '',
                 mahalleKoy: values.mahalle_koy || '',
                 tarih: values.tarih || '',
                 saat: values.saat || '',
-                duzenleyenAdsoyad: values.duzenleyen_adsoyad || '',
-                duzenleyenRutbe: values.duzenleyen_rutbe || '',
-                duzenleyenSicil: values.duzenleyen_sicil || '',
+                duzenleyenAdsoyad: values.duzenleyen_adsoyad || values.duzenleyen_ad || '',
+                duzenleyenRutbe: values.duzenleyen_rutbe || values.memur_rutbe || '',
+                duzenleyenSicil: values.duzenleyen_sicil || values.memur_sicil || '',
                 content: html,
             };
             const filePath = await generatePDF(pdfData);

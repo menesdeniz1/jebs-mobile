@@ -12,6 +12,7 @@ import { toastConfig } from '../components/ui/Toast';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { useDraftsStore } from '../store/draftsStore';
 import { useSearchStore } from '../store/searchStore';
+import { useOfficerProfileStore } from '../store/officerProfileStore';
 import { useTheme } from '../constants/theme';
 import { cleanupPDFTempFiles } from '../lib/cleanup';
 import DisclaimerGate from './disclaimer';
@@ -21,6 +22,7 @@ export default function RootLayout() {
     const loadFavorites = useFavoritesStore((s) => s.load);
     const loadDrafts = useDraftsStore((s) => s.load);
     const loadSearch = useSearchStore((s) => s.load);
+    const loadOfficerProfile = useOfficerProfileStore((s) => s.load);
 
     const [fontsLoaded] = useFonts({
         'NotoSans-Regular': NotoSans_400Regular,
@@ -32,6 +34,7 @@ export default function RootLayout() {
         loadFavorites();
         loadDrafts();
         loadSearch();
+        loadOfficerProfile();
         cleanupPDFTempFiles();
     }, []);
 
