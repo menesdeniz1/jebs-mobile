@@ -43,26 +43,7 @@ function generatePDFHTML(data: PDFData): string {
   <style>
     @page { size: A4; margin: 2.5cm; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.6; color: #000; position: relative; }
-    .watermark {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      z-index: 9999;
-    }
-    .watermark-text {
-      font-size: 48pt;
-      font-weight: bold;
-      color: rgba(200, 0, 0, 0.12);
-      transform: rotate(-35deg);
-      white-space: nowrap;
-      letter-spacing: 8px;
-      text-align: center;
-      line-height: 2.5;
-    }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.6; color: #000; }
     .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #555; padding-bottom: 15px; }
     .header h1 { font-size: 14pt; font-weight: bold; margin: 3px 0; }
     .header h2 { font-size: 12pt; color: #666; margin: 5px 0 0; font-style: italic; }
@@ -75,7 +56,7 @@ function generatePDFHTML(data: PDFData): string {
       background: #FFF3F3;
       color: #C62828;
       font-weight: bold;
-      font-size: 10pt;
+      font-size: 12pt;
     }
     .location-sentence { margin-bottom: 20px; text-indent: 2em; text-align: justify; }
     .content { margin-bottom: 30px; }
@@ -90,15 +71,6 @@ function generatePDFHTML(data: PDFData): string {
   </style>
 </head>
 <body>
-  <!-- Watermark: TASLAK — RESMİ BELGE DEĞİLDİR -->
-  <div class="watermark">
-    <div class="watermark-text">
-      TASLAK — RESMİ BELGE DEĞİLDİR<br>
-      TASLAK — RESMİ BELGE DEĞİLDİR<br>
-      TASLAK — RESMİ BELGE DEĞİLDİR
-    </div>
-  </div>
-
   <div class="header">
     <h1>Jandarma Saha Rehberi</h1>
     <h2>${title}</h2>
