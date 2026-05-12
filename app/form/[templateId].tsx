@@ -97,6 +97,14 @@ export default function FormFillingScreen() {
         }
     };
 
+    const navigateBack = () => {
+        if (router.canGoBack()) {
+            router.back();
+        } else {
+            router.replace('/(tabs)');
+        }
+    };
+
     const handleSaveDraft = () => {
         const draft: Draft = {
             id: draftId || Date.now().toString(),
@@ -113,7 +121,7 @@ export default function FormFillingScreen() {
         setShowSaveDialog(false);
         if (pendingBack) {
             setPendingBack(false);
-            router.back();
+            navigateBack();
         }
     };
 
@@ -155,13 +163,22 @@ export default function FormFillingScreen() {
         }
     };
 
+    // Fields that are auto-filled and should NOT trigger the save dialog
+    const autoFilledIds = new Set([
+        'tarih', 'saat',
+        'duzenleyen_adsoyad', 'duzenleyen_rutbe', 'duzenleyen_sicil',
+        'duzenleyen_ad', 'memur_rutbe', 'memur_sicil',
+    ]);
+
     const handleBackPress = () => {
-        const hasValues = Object.values(values).some((v) => v && v.trim());
-        if (hasValues) {
+        const hasUserEdited = Object.entries(values).some(
+            ([key, v]) => v && v.trim() && !autoFilledIds.has(key)
+        );
+        if (hasUserEdited) {
             setPendingBack(true);
             setShowSaveDialog(true);
         } else {
-            router.back();
+            navigateBack();
         }
     };
 
@@ -286,27 +303,17 @@ export default function FormFillingScreen() {
 
                 <Dialog
                     visible={showSaveDialog}
-                    title="Taslak Kaydet"
+                    title="Kaydedilmemiş Değişiklikler"
                     message="Formu taslak olarak kaydetmek ister misiniz?"
                     buttons={[
-                        { label: 'Evet, Kaydet', variant: 'primary', onPress: handleSaveDraft },
+                        { label: 'Kaydet ve Çık', variant: 'primary', onPress: handleSaveDraft },
                         {
-                            label: 'Hayır, Çık',
-                            variant: 'secondary',
-                            onPress: () => {
-                                setShowSaveDialog(false);
-                                if (pendingBack) {
-                                    setPendingBack(false);
-                                    router.back();
-                                }
-                            },
-                        },
-                        {
-                            label: 'İptal',
+                            label: 'Kaydetmeden Çık',
                             variant: 'secondary',
                             onPress: () => {
                                 setShowSaveDialog(false);
                                 setPendingBack(false);
+                                navigateBack();
                             },
                         },
                     ]}
