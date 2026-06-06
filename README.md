@@ -89,7 +89,7 @@ A mobile guide application for gendarmerie personnel that shows step-by-step pro
 
 ```bash
 # Clone the repository
-git clone https://github.com/ernykt/jebs-mobile.git
+git clone https://github.com/menesdeniz1/jebs-mobile.git
 cd jebs-mobile
 
 # Install dependencies
