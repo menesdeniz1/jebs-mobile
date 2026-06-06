@@ -22,6 +22,11 @@ describe('favoritesStore', () => {
     expect(state.loaded).toBe(false);
   });
 
+  it('load() sets loaded=true', async () => {
+    await useFavoritesStore.getState().load();
+    expect(useFavoritesStore.getState().loaded).toBe(true);
+  });
+
   it('toggle adds a favorite', () => {
     useFavoritesStore.getState().toggle('event_type', 'darp', 'Darp');
     const state = useFavoritesStore.getState();
@@ -71,6 +76,11 @@ describe('searchStore', () => {
     expect(useSearchStore.getState().history).toEqual([]);
   });
 
+  it('load() sets loaded=true', async () => {
+    await useSearchStore.getState().load();
+    expect(useSearchStore.getState().loaded).toBe(true);
+  });
+
   it('addQuery adds to front of history', () => {
     useSearchStore.getState().addQuery('darp');
     useSearchStore.getState().addQuery('hırsızlık');
@@ -98,3 +108,4 @@ describe('searchStore', () => {
     expect(useSearchStore.getState().history).toEqual([]);
   });
 });
+

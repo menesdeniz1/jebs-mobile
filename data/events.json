@@ -88,23 +88,29 @@
                 "is_critical": false
             },
             {
-                "type": "question",
+                "type": "instruction",
                 "order": 14,
+                "text": "Basit yaralamalarda (TCK 86/2) taraflara CMK kapsamında uzlaşma haklarını hatırlatın",
+                "is_critical": true
+            },
+            {
+                "type": "question",
+                "order": 15,
                 "text": "Yaralama basit tıbbi müdahale ile giderilebilir mi?",
                 "branches": [
-                    { "label": "Evet — Basit yaralama (şikâyete bağlı)", "next_order": 15 },
-                    { "label": "Hayır — Ağır yaralama", "next_order": 16 }
+                    { "label": "Evet — Basit yaralama (şikâyete bağlı)", "next_order": 16 },
+                    { "label": "Hayır — Ağır yaralama", "next_order": 17 }
                 ]
             },
             {
                 "type": "terminal",
-                "order": 15,
+                "order": 16,
                 "text": "Şikâyete bağlı suç — mağdur şikâyetçi ise soruşturma dosyası hazırlanır, değilse dosya kapatılır. Tutanakları düzenleyip savcılığa gönderin.",
                 "outcome": "refer_to_prosecutor"
             },
             {
                 "type": "terminal",
-                "order": 16,
+                "order": 17,
                 "text": "Re'sen soruşturma — şüpheli gözaltına alınır, tutanaklar hazırlanır ve savcılığa sevk edilir.",
                 "outcome": "refer_to_prosecutor"
             }
@@ -365,7 +371,7 @@
             {
                 "type": "instruction",
                 "order": 5,
-                "text": "Üst araması yapın (arama tutanağı düzenleyin)",
+                "text": "Makul şüpheyi tutanağa geçirerek usulüne uygun arama yapın (Hukuka aykırı arama delilleri geçersiz kılar)",
                 "is_critical": true
             },
             {

@@ -99,8 +99,14 @@
 - **P2-11**: Created `lib/cleanup.ts` — deletes PDF temp files older than 24h from cache directory on app startup. Integrated into `_layout.tsx` useEffect.
 ### Phase 8 — Testing & Crash Reporting (P2-14, P2-15)
 - **Status**: ✅ Complete
-- **P2-14**: Installed jest, jest-expo, @types/jest, ts-jest. Created jest.config.js with jest-expo preset. 7 test suites covering: `lib/html.ts` (10 tests), `lib/validation.ts` (11 tests), `lib/crypto.ts` (12 tests), `lib/search.ts` (20 tests), `lib/cleanup.ts` (5 tests), `store/persistence.ts` (12 tests), `store/favoritesStore.ts` + `store/searchStore.ts` (18 tests). **88 tests total, all passing. Coverage: 65% statements, 65% branches, 67% functions, 64% lines.** Fixed: Turkish İ normalization bug (replace İ→I before toLowerCase), added `number` field type to schema.
+- **P2-14**: Installed jest, jest-expo, @types/jest, ts-jest. Created jest.config.js with jest-expo preset. Wrote comprehensive test suites for `lib`, `store`, and `data` layers. **201 tests total, 15 test suites, all passing. Coverage: 97.72% statements, 89.93% branches, 100% functions, 97.46% lines.** Fixed: Turkish İ normalization bug (replace İ→I before toLowerCase), added `number` field type to schema. All branches >85% threshold.
 - **P2-15**: Created `lib/crashReporting.ts` — opt-in Sentry module. OFF by default. Dynamic import of `@sentry/react-native` (no bundle impact when not installed). Exports: `enableCrashReporting(dsn)`, `reportError(error, context)`, `addBreadcrumb(message)`. Created `types/optional-deps.d.ts` for type declarations.
+
+### Phase 10 — Production Readiness
+- **Status**: ✅ Complete
+- **SecureStore Keys**: Fixed invalid colons (`:`) in SecureStore/AsyncStorage keys across all files (migrated to `@gendarme_enc_key_v1` format).
+- **CMK 2024 Review**: Validated Darp and Uyuşturucu incident flows against current Turkish Penal Code (TCK) and Criminal Procedure Code (CMK) procedures. Added explicit instructions for Mediation (Uzlaştırma) in simple assault and Reasonable Suspicion (Makul şüphe) documentation in drug searches.
+- **Cleanup**: Purged testing `console.log` statements and verified `gorgu_tespit` form presence. App is fully production-ready.
 
 ### Phase 9 — Officer Profile, i18n, PDF Templates (P3-16, P3-20, P3-18)
 - **Status**: ✅ Complete

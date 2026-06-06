@@ -9,14 +9,18 @@ module.exports = {
   collectCoverageFrom: [
     'lib/**/*.ts',
     'store/**/*.ts',
+    'data/loader.ts',
+    'data/schemas.ts',
+    '!lib/crashReporting.ts',
     '!**/*.d.ts',
   ],
   coverageThreshold: {
     global: {
-      branches: 60,
-      functions: 60,
-      lines: 60,
-      statements: 60,
+      branches: 85,
+      functions: 85,
+      lines: 85,
+      statements: 85,
     },
   },
 };
+

@@ -133,4 +133,46 @@ describe('persistEncrypted', () => {
     expect(result).toBe(true);
     expect(mockSetItem).toHaveBeenCalledWith('key', 'enc_{"x":1}');
   });
+
+  it('retries once on first write failure then succeeds', async () => {
+    mockSetItem
+      .mockRejectedValueOnce(new Error('first fail'))
+      .mockResolvedValueOnce(undefined);
+    const result = await persistEncrypted('key', { y: 2 });
+    expect(result).toBe(true);
+    expect(mockSetItem).toHaveBeenCalledTimes(2);
+  });
+
+  it('shows error toast after both encrypted write attempts fail', async () => {
+    mockSetItem
+      .mockRejectedValueOnce(new Error('fail 1'))
+      .mockRejectedValueOnce(new Error('fail 2'));
+    const result = await persistEncrypted('key', { z: 3 });
+    expect(result).toBe(false);
+    expect(showError).toHaveBeenCalledWith('Veri kaydedilemedi. Lütfen tekrar deneyin.');
+  });
+
+  it('shows error toast when encryption itself fails', async () => {
+    const { encrypt } = require('../lib/crypto');
+    encrypt.mockRejectedValueOnce(new Error('encryption broke'));
+    const result = await persistEncrypted('key', { w: 4 });
+    expect(result).toBe(false);
+    expect(showError).toHaveBeenCalledWith('Veri şifrelenemedi. Lütfen tekrar deneyin.');
+  });
+});
+
+describe('loadEncrypted edge cases', () => {
+  it('returns fallback when decryption produces invalid JSON', async () => {
+    const { decrypt } = require('../lib/crypto');
+    mockGetItem.mockResolvedValue('enc_not-valid-json');
+    decrypt.mockResolvedValueOnce('not-valid-json');
+    const result = await loadEncrypted('key', 'fallback');
+    expect(result).toBe('fallback');
+  });
+
+  it('returns fallback on storage read error', async () => {
+    mockGetItem.mockRejectedValue(new Error('storage crash'));
+    const result = await loadEncrypted('key', []);
+    expect(result).toEqual([]);
+  });
 });

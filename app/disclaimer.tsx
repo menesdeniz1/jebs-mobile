@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-nati
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme, FontFamily, FontSize, Spacing, BorderRadius } from '../constants/theme';
 
-const DISCLAIMER_KEY = '@gendarme:disclaimer_accepted:v1';
+const DISCLAIMER_KEY = '@gendarme_disclaimer_accepted_v1';
 
 interface DisclaimerGateProps {
   children: React.ReactNode;

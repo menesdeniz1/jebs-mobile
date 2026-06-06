@@ -21,7 +21,7 @@ interface FavoritesState {
     getByType: (type: FavoriteType) => Favorite[];
 }
 
-const STORAGE_KEY = '@gendarme:favorites:v1';
+const STORAGE_KEY = '@gendarme_favorites_v1';
 
 export const useFavoritesStore = create<FavoritesState>((set, get) => ({
     favorites: [],

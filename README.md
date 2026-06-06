@@ -73,7 +73,7 @@ A mobile guide application for gendarmerie personnel that shows step-by-step pro
 | Sharing | expo-sharing |
 | Icons | lucide-react-native |
 | Fonts | Noto Sans (Google Fonts) |
-| Testing | Jest + jest-expo (88 tests, ≥60% coverage) |
+| Testing | Jest + jest-expo (201 tests, >97% coverage) |
 | Crash Reporting | Sentry (optional, OFF by default) |
 
 ---
@@ -211,9 +211,8 @@ npm test
 npm run test:coverage
 ```
 
-**Coverage targets**: ≥60% on `lib/` and `store/` directories.
-Current: 65% statements, 65% branches, 67% functions, 64% lines.
-
+**Coverage targets**: ≥85% global coverage.
+Current: 97.72% statements, 89.93% branches, 100% functions, 97.46% lines.
 ---
 
 ## 🎨 Design System

@@ -9,7 +9,7 @@ interface SearchState {
     clear: () => void;
 }
 
-const STORAGE_KEY = '@gendarme:search_history:v1';
+const STORAGE_KEY = '@gendarme_search_history_v1';
 const MAX_HISTORY = 10;
 
 export const useSearchStore = create<SearchState>((set, get) => ({

@@ -32,7 +32,7 @@ interface OfficerProfileState {
   hasProfile: () => boolean;
 }
 
-const STORAGE_KEY = '@gendarme:officer_profile:v1';
+const STORAGE_KEY = '@gendarme_officer_profile_v1';
 
 export const useOfficerProfileStore = create<OfficerProfileState>((set, get) => ({
   profile: { ...EMPTY_PROFILE },

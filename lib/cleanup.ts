@@ -46,7 +46,7 @@ export async function cleanupPDFTempFiles(): Promise<void> {
     }
 
     if (cleaned > 0) {
-      console.log(`[cleanup] Removed ${cleaned} old PDF temp file(s)`);
+      // Intentionally left blank or use proper logger
     }
   } catch (error) {
     console.warn('[cleanup] PDF temp cleanup failed:', error);

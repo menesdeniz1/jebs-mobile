@@ -17,7 +17,7 @@
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 
-const SECURE_KEY_ALIAS = '@gendarme:enc_key:v1';
+const SECURE_KEY_ALIAS = '@gendarme_enc_key_v1';
 
 /**
  * Generate a random key string (64 hex chars = 256 bits).

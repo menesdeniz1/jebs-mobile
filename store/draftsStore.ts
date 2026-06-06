@@ -20,7 +20,7 @@ interface DraftsState {
     getRecent: (count: number) => Draft[];
 }
 
-const STORAGE_KEY = '@gendarme:drafts:v1';
+const STORAGE_KEY = '@gendarme_drafts_v1';
 
 export const useDraftsStore = create<DraftsState>((set, get) => ({
     drafts: [],

@@ -59,7 +59,6 @@ export async function enableCrashReporting(dsn?: string): Promise<void> {
     });
 
     _isEnabled = true;
-    console.log('[crash-reporting] Sentry initialized successfully');
   } catch (error) {
     console.warn('[crash-reporting] Failed to initialize Sentry:', error);
   }
