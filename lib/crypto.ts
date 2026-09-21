@@ -1,117 +1,46 @@
-/**
- * Encryption layer for PII-bearing data (drafts).
- *
- * Strategy:
- * - A random encryption key is generated once and stored in expo-secure-store
- * - Draft data is encrypted with this key before being persisted to AsyncStorage
- * - On load, data is decrypted with the same key
- *
- * This prevents plaintext PII exposure if the device is lost/stolen,
- * while respecting SecureStore's 2048-byte limit on value size.
- *
- * NOTE: This uses a simple XOR-based obfuscation rather than AES because
- * React Native doesn't ship a native crypto API. For production military-grade
- * encryption, consider react-native-quick-crypto or expo-crypto.
- * This layer is still a SIGNIFICANT improvement over plaintext AsyncStorage.
- */
+/** Versioned authenticated storage for the prototype. No insecure fallback. */
 import * as SecureStore from 'expo-secure-store';
+import { getRandomBytesAsync } from 'expo-crypto';
 import { Platform } from 'react-native';
+import { gcm } from '@noble/ciphers/aes';
+import { bytesToHex, hexToBytes, utf8ToBytes, bytesToUtf8 } from '@noble/ciphers/utils';
 
-const SECURE_KEY_ALIAS = '@gendarme_enc_key_v1';
+const KEY_ALIAS = '@gendarme_aes_gcm_key_v2';
+const PREFIX = 'aesgcm-v2:';
+let keyPromise: Promise<Uint8Array> | null = null;
 
-/**
- * Generate a random key string (64 hex chars = 256 bits).
- * Uses Math.random as a fallback — not cryptographically secure,
- * but adequate for obfuscation-at-rest on a field device.
- */
-function generateKey(): string {
-  const bytes = new Uint8Array(32);
-  for (let i = 0; i < 32; i++) {
-    bytes[i] = Math.floor(Math.random() * 256);
+async function getKey(): Promise<Uint8Array> {
+  if (Platform.OS === 'web') throw new Error('Sensitive persistence is disabled on web.');
+  if (!keyPromise) {
+    keyPromise = (async () => {
+      const stored = await SecureStore.getItemAsync(KEY_ALIAS);
+      if (stored !== null) {
+        if (!/^[0-9a-f]{64}$/.test(stored)) throw new Error('Invalid stored key; recovery required.');
+        return hexToBytes(stored);
+      }
+      const key = await getRandomBytesAsync(32);
+      await SecureStore.setItemAsync(KEY_ALIAS, bytesToHex(key));
+      return key;
+    })();
+    keyPromise.catch(() => { keyPromise = null; });
   }
-  return Array.from(bytes)
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
+  return keyPromise;
 }
 
-let _cachedKey: string | null = null;
-
-/**
- * Get or create the encryption key.
- * On web, returns a static key (web has no SecureStore).
- */
-async function getEncryptionKey(): Promise<string> {
-  if (_cachedKey) return _cachedKey;
-
-  // Web fallback — no SecureStore available
-  if (Platform.OS === 'web') {
-    _cachedKey = 'web-fallback-key-not-secure';
-    return _cachedKey;
-  }
-
-  try {
-    const existing = await SecureStore.getItemAsync(SECURE_KEY_ALIAS);
-    if (existing) {
-      _cachedKey = existing;
-      return existing;
-    }
-
-    const newKey = generateKey();
-    await SecureStore.setItemAsync(SECURE_KEY_ALIAS, newKey);
-    _cachedKey = newKey;
-    return newKey;
-  } catch (error) {
-    console.warn('[crypto] SecureStore unavailable, using ephemeral key:', error);
-    // Fallback: generate an ephemeral key (data will be unreadable after restart)
-    _cachedKey = generateKey();
-    return _cachedKey;
-  }
-}
-
-/**
- * XOR-based obfuscation.
- * Not cryptographically strong, but prevents trivial plaintext reads.
- */
-function xorObfuscate(data: string, key: string): string {
-  const result: number[] = [];
-  for (let i = 0; i < data.length; i++) {
-    result.push(data.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-  }
-  // Encode as base64-safe hex pairs
-  return result.map((c) => c.toString(16).padStart(4, '0')).join('');
-}
-
-function xorDeobfuscate(hex: string, key: string): string {
-  const chars: string[] = [];
-  for (let i = 0; i < hex.length; i += 4) {
-    const code = parseInt(hex.substring(i, i + 4), 16);
-    const keyCode = key.charCodeAt((i / 4) % key.length);
-    chars.push(String.fromCharCode(code ^ keyCode));
-  }
-  return chars.join('');
-}
-
-/**
- * Encrypt a string payload for storage.
- */
 export async function encrypt(plaintext: string): Promise<string> {
-  const key = await getEncryptionKey();
-  return xorObfuscate(plaintext, key);
+  const key = await getKey();
+  const nonce = await getRandomBytesAsync(12);
+  const encrypted = gcm(key, nonce).encrypt(utf8ToBytes(plaintext));
+  return PREFIX + bytesToHex(nonce) + ':' + bytesToHex(encrypted);
 }
 
-/**
- * Decrypt a stored payload.
- */
 export async function decrypt(ciphertext: string): Promise<string> {
-  const key = await getEncryptionKey();
-  return xorDeobfuscate(ciphertext, key);
+  if (!isEncrypted(ciphertext)) throw new Error('Legacy/invalid data requires explicit recovery; it was not deleted.');
+  const parts = ciphertext.slice(PREFIX.length).split(':');
+  const key = await getKey();
+  return bytesToUtf8(gcm(key, hexToBytes(parts[0])).decrypt(hexToBytes(parts[1])));
 }
 
-/**
- * Check if a string looks like our encrypted format (all hex chars, length divisible by 4).
- * Used during migration to detect unencrypted legacy data.
- */
 export function isEncrypted(data: string): boolean {
-  if (data.length === 0 || data.length % 4 !== 0) return false;
-  return /^[0-9a-f]+$/.test(data);
+  return /^aesgcm-v2:[0-9a-f]{24}:(?:[0-9a-f]{2}){16,}$/.test(data);
 }

@@ -67,6 +67,7 @@ export async function removeFromStorage(key: string): Promise<boolean> {
 // ── Encrypted variants (P0-5) ────────────────────────
 
 import { encrypt, decrypt, isEncrypted } from '../lib/crypto';
+const blockedEncryptedKeys = new Set<string>();
 
 /**
  * Load a JSON value from AsyncStorage, decrypting first.
@@ -83,9 +84,10 @@ export async function loadEncrypted<T>(key: string, fallback: T): Promise<T> {
       return JSON.parse(decrypted) as T;
     }
 
-    // Legacy unencrypted data — parse directly, will be re-encrypted on next save
-    return JSON.parse(raw) as T;
+    throw new Error('Legacy or invalid stored data requires explicit recovery.');
   } catch (error) {
+    blockedEncryptedKeys.add(key);
+    showError('Eski veya okunamayan kayıt bulundu. Üzerine yazma engellendi; yedekleyip kurtarma yapın.');
     console.warn(`[storage] Failed to load encrypted "${key}":`, error);
     return fallback;
   }
@@ -96,6 +98,10 @@ export async function loadEncrypted<T>(key: string, fallback: T): Promise<T> {
  * Writes the encrypted hex string directly (not JSON-wrapped).
  */
 export async function persistEncrypted<T>(key: string, value: T): Promise<boolean> {
+  if (blockedEncryptedKeys.has(key)) {
+    showError('Kurtarma gerekli: mevcut kayıt korunuyor, yeni kayıt yazılmadı.');
+    return false;
+  }
   try {
     const json = JSON.stringify(value);
     const encrypted = await encrypt(json);

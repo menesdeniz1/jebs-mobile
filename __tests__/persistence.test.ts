@@ -113,10 +113,12 @@ describe('loadEncrypted', () => {
     expect(result).toEqual([1, 2, 3]);
   });
 
-  it('loads legacy unencrypted JSON directly', async () => {
+  it('preserves legacy records and blocks overwriting rather than silently migrating', async () => {
     mockGetItem.mockResolvedValue('[4,5,6]');
-    const result = await loadEncrypted('key', []);
-    expect(result).toEqual([4, 5, 6]);
+    const result = await loadEncrypted('legacy-key', []);
+    expect(result).toEqual([]);
+    expect(await persistEncrypted('legacy-key', { replacement: true })).toBe(false);
+    expect(mockSetItem).not.toHaveBeenCalled();
   });
 
   it('returns fallback when key not found', async () => {

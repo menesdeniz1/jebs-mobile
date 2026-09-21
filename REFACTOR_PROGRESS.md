@@ -126,3 +126,6 @@
 ## Skipped Items
 
 *(None — all 20/20 items complete)*
+# Historical notes — superseded by September 2026 publication maintenance
+
+Earlier encryption/security checkmarks below describe historical intent, not certified protection. XOR has now been replaced with versioned AES-GCM; insecure web/failure fallbacks and automatic legacy migration are removed. Current limitations and test instructions are in README.md. No historical coverage percentage is claimed by this publication pass.
