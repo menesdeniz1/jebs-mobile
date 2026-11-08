@@ -8,9 +8,19 @@ Use Node.js 22, then `npm ci` and `npm start`. The repository uses Expo SDK 54. 
 
 Dependency maintenance reduced the audit findings from 38 (including 2 critical) to 22 (12 moderate, 10 high) at review time. The remaining findings include Expo/tooling transitive dependencies; a tested SDK upgrade is still needed. No zero-vulnerability or deployment-safety claim is made. Do not expose development tooling to untrusted networks.
 
+## Credits
+
+The initial release was written by [ernykt](https://github.com/ernykt) (February 2026). Mücahid Enes Deniz later refactored it (May–September 2026): encrypted drafts, Zod validation, the decision-tree guide, PDF templates, profile auto-fill and the test suite.
+
 ## Implementation
 
-React Native/Expo UI, Zustand state, schema validation, Turkish text search, local content and PDF formatting. Source publication does not certify correctness of form wording, legal references or security of exported files.
+React Native/Expo UI (expo-router), Zustand state, Zod schema validation, Turkish text search, local content and PDF formatting.
+
+- **Guided decision tree:** step-by-step event guide (`components/guide/DecisionTreeWalker.tsx`) with checklists and linked articles
+- **Form templates and PDF export:** template-driven forms (`app/form/[templateId].tsx`) rendered to PDF via `expo-print`
+- **Profile auto-fill:** a saved user profile pre-fills recurring form fields (`store/officerProfileStore.ts`)
+- **Tests:** 166 Jest tests in `__tests__/` (crypto, drafts, PDF templates, search, validation, persistence)
+ Source publication does not certify correctness of form wording, legal references or security of exported files.
 
 ## Storage maintenance — September 2026
 
